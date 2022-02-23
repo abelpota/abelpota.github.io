@@ -1,10 +1,10 @@
-body {
+.body {
   background-color: orange;
 
-a {
+.a {
   color: black;
   text-decoration: none;
 }
-li {
+.li {
   list-style: square;
 }
