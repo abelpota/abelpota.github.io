@@ -1,0 +1,16 @@
+body {
+  background-color: DodgerBlue;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+h1,h2,h3,h4,h5,h6,p {
+  color: black;
+  text-align: center;
+}
+li {
+  list-style: square;
+  text-align: center;
+  color: black;
+}
