@@ -1,6 +1,6 @@
 body {
   background-color: orange;
-
+}
 a {
   color: black;
   text-decoration: none;
@@ -8,3 +8,8 @@ a {
 li {
   list-style: square;
 }
+#blueCenter {
+  color: blue;
+  text-align: center;
+}
+ 
