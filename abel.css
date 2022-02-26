@@ -31,6 +31,23 @@ li {
   background-color: red;
   color: white;
 }
+.btn {
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Ok {background-color: #04AA6D;} /* Green */
+.Ok:hover {background-color: #46a049;}
+
+.Warning {background-color: #ff9800;} /* Orange */
+.Warning:hover {background: #e68a00;}
+
+.Error {background-color: #f44336;} /* Red */ 
+.Error:hover {background: #da190b;}
+
 #blue{
   color: blue;
 }
