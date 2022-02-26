@@ -1,0 +1,7 @@
+body {
+  background-color: orange;
+}
+table, th, td {
+  border: 3px solid black;
+  border-collapse: collapse;
+}
