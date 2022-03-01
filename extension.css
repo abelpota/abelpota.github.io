@@ -5,9 +5,13 @@ li {
   list-style: square;
   color: white;
 }
-a {
+a:link  {
   text-decoration: none;
   color: white;
+}
+a:visited {
+  text-decoration: none;
+  color:green
 }
 h1,h2,h3,h4,h5,h6,p {
   color: white
