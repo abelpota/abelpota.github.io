@@ -18,4 +18,6 @@ li {
   text-decoration: line-through;
   color: gray;
 }
-
+#center {
+  text-align: center;
+}
