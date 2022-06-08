@@ -2,13 +2,65 @@
 <!-- Help:0 -->
 <html>
 	<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Gyakorolni akarsz? Gyakoroly itt!</title>
     <link rel="icon" href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.bEK6leyVoElIGnBkpQV-1wHaHa%26pid%3DApi&f=1">
     <link rel="stylesheet" href="./abel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
+    <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Security alert!</strong> pi.home/ does not have an encrypted connection. Use abelpota.github.io/ to get a encrypted connection.
+</div>
     <div class="cleanslate w24tz-current-time w24tz-small" style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;"><p><a href="//24timezones.com/Amsterdam/tijd" style="text-decoration: none" class="clock24" id="tz24-1645527949-c116-eyJob3VydHlwZSI6MTIsInNob3dkYXRlIjoiMSIsInNob3dzZWNvbmRzIjoiMSIsImNvbnRhaW5lcl9pZCI6ImNsb2NrX2Jsb2NrX2NiNjIxNGMzOGRhOGRjMCIsInR5cGUiOiJkYiIsImxhbmciOiJubCJ9" title="Amsterdam tijd" target="_blank" rel="nofollow">Tijd in Amsterdam</a></p><div id="clock_block_cb6214c38da8dc0"></div></div>
     <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
 	</head>
   <body>
+    <br>
+    <hr>
+    <a href="https://www.speedtest.net/nl" target="_blank"><div id="div1" class="fa"></div>
+
+<script>
+function iconchange() {
+  var a;
+  a = document.getElementById("div1");
+  a.innerHTML = "&#xf1eb";
+  setTimeout(function () {
+      a.innerHTML = "&#xf012;";
+    }, 1000);
+  setTimeout(function () {
+      a.innerHTML = "&#xf0e8;";
+    }, 2000);
+ 
+}
+iconchange();
+setInterval(iconchange, 3000);
+</script>
+Internet sebesség ellenőrzése</a>
+    <hr>
     <br>
     <a href="./uj.html" class="notification">
       <span>Új dolgok</span>
@@ -20,6 +72,13 @@
       <span>Tervezet frisítések</span>
       <span class="badge">0</span>
     </a>
+    <br>
+    <button onclick="myFunction()">Info</button>
+    <script>
+function myFunction() {
+  alert("--EMPTY--");
+}
+</script>
     <br>
 		<h1 id="blue">Hello</h1>
     <p>Mit akarsz gyakorolni :)
@@ -44,7 +103,7 @@
       <a href="zene.html" target="_self">- ZeneWeb</a>
 			<br>
 			<br>
-			<a href="https://scratch.mit.edu/projects/461870156" target="blank">Ora!</a>
+			<a href="https://scratch.mit.edu/projects/461870156" target="blank">Óra!</a>
 			<br>
 			Ha kesz vagy:
 			<br>
