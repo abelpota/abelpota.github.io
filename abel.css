@@ -38,7 +38,6 @@ li {
   font-size: 16px;
   cursor: pointer;
 }
-
 .Ok {background-color: #04AA6D;} /* Green */
 .Ok:hover {background-color: #46a049;}
 
@@ -74,4 +73,11 @@ li {
   background-color: #04AA6D;
   color: white;
 } 
-
+#div1, #div2 {
+  float: left;
+  width: 100px;
+  height: 35px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
