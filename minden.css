@@ -62,7 +62,3 @@ li {
 
 .Error {background-color: #f44336;} /* Red */ 
 .Error:hover {background: #da190b;}
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}

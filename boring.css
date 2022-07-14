@@ -1,0 +1,23 @@
+body {
+  background-color:#9dfc00 ;
+
+}
+img {
+  width:100px ;
+  height:100px ;
+}
+button {
+  background-color:#56fc00 ;
+  border-style:outset ;
+  border-color:green ;
+  border-width:5px ;
+  width:130px ;
+  height:130px ;
+}
+button:hover {
+  border-style:solid ;
+  border-color:purple ;
+}
+a {
+  text-decoration:none ;
+  text-color:#000000 ;
