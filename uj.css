@@ -75,7 +75,7 @@ a {
   margin-left: -40px;
   border-width: 5px;
   border-style: solid;
-  border-color: #555 transparent transparent transparent;
+  border-color: #555 transparent transparent;
 }
 
 /* Toggle this class - hide and show the popup */
