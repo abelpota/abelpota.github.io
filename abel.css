@@ -79,3 +79,19 @@ h1,h2,h3,h4,h5,p {
 .b-font {
   font-family: cursive;
 }
+@keyframes loading {
+    0%   {background-color:black; left:0px; top:0px;}
+    25%  {background-color:black; left:20px; top:0px;}
+    50%  {background-color:black; left:20px; top:20px;}
+    75%  {background-color:black; left:0px; top:20px;}
+    100% {background-color:black; left:0px; top:0px;}
+}
+.div {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    position: relative;
+    animation-name: loading;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
