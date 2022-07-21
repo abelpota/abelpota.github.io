@@ -1,0 +1,45 @@
+body {
+  background-color: black;
+  animation: mymove 60s infinite;
+}
+code {
+  background-color: gray;
+  color: white;
+}
+a {
+  text-decoration: none;
+  color: red;
+}
+a:visited {
+  color: green;
+}
+h1,h2,h3,h4,h5,h6,p,li {
+  color: white;
+}
+@keyframes mymove {
+  0% {background-color: black;}
+  33% {background-color: green;}
+  66% {background-color: green;}
+  100% {background-color: black;}
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
