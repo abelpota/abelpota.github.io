@@ -5,18 +5,18 @@
 #### Code status: [![CodeFactor](https://www.codefactor.io/repository/github/abelpota/abelpota.github.io/badge)](https://www.codefactor.io/repository/github/abelpota/abelpota.github.io)
 ###### *Do you want CodeFactor? [Click here!](https://github.com/marketplace/codefactor)*
 ---
-| Website       | Description                         | Recommendation to visit                       |
-| :-----------: |:-----------------------------------:| :--------------------------------------------:|
-| index.html    | homepage                            | `100%`                                        |
-| abel.html     | homepage                            | `100%` (i think this is the best page)        |
-| boring.html   | play (web)games                     | `80%` (only 3 games)                          |
-| calendar.html | check the day                       | `30%` (does not refresh)                      |
-| extension.html| download helpful extensions         | `100%`                                        |
-| minden.html   | all websites                        | `---%` (necessary to switch between websites) |
-| mypage.html   | check subscribers & subscribe       | `75%` (looks not too pretty)                  |
-| new.html      | suprise boxes                       | `80%`                                         |
-| pegi.html     | check the recommanden age for games | `90%` (few games availible but nice)          |
-| program.html  | Learn HTML & CSS                    | `---%` (the site is not compleet)             |
-| uj.html       | View changes                        | `90%` (the site is not always up-to-date)     |
-| web-tip.html  | *Not availible*                     | `---%`                                        |
-| zene.html     | Some music from spotify             | `90%`                                         |
+|Availible         | Website       | Description                         | Recommendation to visit                       | Last update                  |
+|:----------------:| :-----------: |:-----------------------------------:| :--------------------------------------------:|:----------------------------:|
+|:white_check_mark:| index.html    | homepage                            | `100%`                                        |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| abel.html     | homepage                            | `100%` (i think this is the best page)        |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| boring.html   | play (web)games                     | `80%` (only 3 games)                          |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| calendar.html | check the day                       | `30%` (does not refresh)                      |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| extension.html| download helpful extensions         | `100%`                                        |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| minden.html   | all websites                        | `---%` (necessary to switch between websites) |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| mypage.html   | check subscribers & subscribe       | `75%` (looks not too pretty)                  |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| new.html      | suprise boxes                       | `80%`                                         |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| pegi.html     | check the recommanden age for games | `90%` (few games availible but nice)          |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| program.html  | Learn HTML & CSS                    | `---%` (the site is not compleet)             |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| uj.html       | View changes                        | `90%` (the site is not always up-to-date)     |:arrow_right: (xx-xx-xx)      |
+|:x:               | web-tip.html  | *Not availible*                     | `---%`                                        |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| zene.html     | Some music from spotify             | `90%`                                         |:arrow_right: (xx-xx-xx)      |
