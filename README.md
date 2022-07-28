@@ -20,3 +20,5 @@
 |:white_check_mark:| uj.html       | View changes                        | `90%` (the site is not always up-to-date)     |:arrow_right: (xx-xx-xx)      |
 |:x:               | web-tip.html  | *Not availible*                     | `---%`                                        |:arrow_right: (xx-xx-xx)      |
 |:white_check_mark:| zene.html     | Some music from spotify             | `90%`                                         |:arrow_right: (xx-xx-xx)      |
+---
+#### Last update: #80
