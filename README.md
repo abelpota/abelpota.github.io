@@ -11,7 +11,7 @@
 |:white_check_mark:| abel.html     | homepage                            | `100%` (i think this is the best page)        |:arrow_right: (xx-xx-xx)      |
 |:white_check_mark:| boring.html   | play (web)games                     | `80%` (only 3 games)                          |:arrow_right: (xx-xx-xx)      |
 |:white_check_mark:| calendar.html | check the day                       | `30%` (does not refresh)                      |:arrow_right: (xx-xx-xx)      |
-|:white_check_mark:| extension.html| download helpful extensions         | `100%`                                        |:arrow_right: (xx-xx-xx)      |
+|:white_check_mark:| extension.html| download helpful extensions         | `100%`                                        |:arrow_right: (22-07-28)      |
 |:white_check_mark:| minden.html   | all websites                        | `---%` (necessary to switch between websites) |:arrow_right: (xx-xx-xx)      |
 |:white_check_mark:| mypage.html   | check subscribers & subscribe       | `75%` (looks not too pretty)                  |:arrow_right: (xx-xx-xx)      |
 |:white_check_mark:| new.html      | suprise boxes                       | `80%`                                         |:arrow_right: (xx-xx-xx)      |
