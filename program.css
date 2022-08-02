@@ -18,8 +18,7 @@ h1,h2,h3,h4,h5,h6,p,li {
 }
 @keyframes mymove {
   0% {background-color: black;}
-  33% {background-color: green;}
-  66% {background-color: green;}
+  50% {background-color: green;}
   100% {background-color: black;}
 }
 .topnav {

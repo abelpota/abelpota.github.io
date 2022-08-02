@@ -1,0 +1,21 @@
+body {
+  animation: cs 60s infinite;
+}
+@keyframes cs { 
+  0% {background-color: orange;}
+  50% {background-color: dodgerblue;}
+  100% {background-color: orange;}
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:visited {
+  color: green;
+}
+li {
+  list-style: square
+}
