@@ -19,7 +19,7 @@
 |:white_check_mark: (Availible)            | program.html  | Learn HTML & CSS                    | `---%` (the site is not compleet)             |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | uj.html       | View changes                        | `90%` (the site is not always up-to-date)     |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | web-tip.html  | Helpful websites                    | `90%`                                         |:arrow_upper_right: {Last +90%} (02-08-22)|
-|:arrows_counterclockwise: (Update planned)| zene.html     | Some music from spotify             | `90%`                                         |:arrow_right: (xx-xx-xx)                  |
+|:white_check_mark: (Availible)| zene.html | Some music from spotify             | `90%`                                         |:arrow_right: (29-08-22)                  |
 
 ###### Icons meaning: 
 ###### :white_check_mark:= Website availible 
