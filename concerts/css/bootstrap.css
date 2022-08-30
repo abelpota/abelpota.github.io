@@ -95,7 +95,6 @@ p {
 
 abbr[title],
 abbr[data-original-title] {
-  text-decoration: underline;
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
   cursor: help;
@@ -203,6 +202,9 @@ pre {
   margin-bottom: 1rem;
   overflow: auto;
   -ms-overflow-style: scrollbar;
+  display: block;
+  font-size: 87.5%;
+  color: #212529;
 }
 
 figure {
@@ -525,12 +527,6 @@ kbd kbd {
   padding: 0;
   font-size: 100%;
   font-weight: 700;
-}
-
-pre {
-  display: block;
-  font-size: 87.5%;
-  color: #212529;
 }
 
 pre code {
@@ -3055,9 +3051,9 @@ input[type="button"].btn-block {
   margin-left: 0;
 }
 
-.dropright .dropdown-toggle::after {
+/*.dropright .dropdown-toggle::after {
   vertical-align: 0;
-}
+}*/
 
 .dropleft .dropdown-menu {
   top: 0;
@@ -3076,9 +3072,9 @@ input[type="button"].btn-block {
   content: "";
 }
 
-.dropleft .dropdown-toggle::after {
+/*.dropleft .dropdown-toggle::after {
   display: none;
-}
+}*/
 
 .dropleft .dropdown-toggle::before {
   display: inline-block;
@@ -3094,10 +3090,6 @@ input[type="button"].btn-block {
 
 .dropleft .dropdown-toggle:empty::after {
   margin-left: 0;
-}
-
-.dropleft .dropdown-toggle::before {
-  vertical-align: 0;
 }
 
 .dropdown-menu[x-placement^="top"], .dropdown-menu[x-placement^="right"], .dropdown-menu[x-placement^="bottom"], .dropdown-menu[x-placement^="left"] {
@@ -4252,10 +4244,6 @@ input[type="button"].btn-block {
 .navbar-expand .navbar-nav .nav-link {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-}
-
-.navbar-expand > .container,
-.navbar-expand > .container-fluid {
 }
 
 .navbar-expand .navbar-collapse {
