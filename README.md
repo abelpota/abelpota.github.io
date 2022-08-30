@@ -14,7 +14,7 @@
 |:white_check_mark: (Availible)            | boring.html   | Play (web)games                     | `80%` (Only 3 games)                          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | calendar.html | Check the day                       | `30%` (Does not refresh)                      |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | extension.html| Download helpful extensions         | `100%`                                        |:arrow_right: (01-08-22)                  |
-|:white_check_mark: (Availible)            | minden.html   | All websites                        | `---%` (Necessary to switch between websites) |:arrow_right: (02-08-22)                  |
+|:white_check_mark: (Availible)            | minden.html   | All websites                        | `---%` (Necessary to switch between websites) |:arrow_right: (30-08-22)                  |
 |:white_check_mark: (Availible)            | mypage.html   | Check subscribers & subscribe       | `75%` (Looks not too pretty)                  |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | new.html      | Suprise boxes                       | `80%`                                         |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | pegi.html     | Check the recommanden age for games | `90%` (Few games availible but nice)          |:arrow_right: (xx-xx-xx)                  |
