@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Concerts 2019</title>
+
+    <style type="text/css">
+        body{
+            background: black !important;
+        }
+
+        .countdown {
+            font-family: sans-serif;
+            color: #fff;
+            display: inline-block;
+            font-weight: 100;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .countdown > div {
+            padding: 10px;
+            border-radius: 3px;
+            background: #daa93b;
+            display: inline-block;
+        }
+
+        .countdown div > span {
+            padding: 15px;
+            border-radius: 3px;
+            background: #b17535;
+            display: inline-block;
+        }
+
+        .smalltext {
+            padding-top: 5px;
+            font-size: 16px;
+        }
+
+        .row-middle {
+            margin-top : 20px
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron bg-dark">
+            <h1 class="text-center text-light">Concerts 2023</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <table style="height: 100%; width: 100%;">
+                    <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            <a href="https://www.mojo.nl/concerten/coldplay/"><img src="./images/coldplay.jpg" /></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6 text-center">
+                <table style="height: 100%; width: 100%;">
+                    <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            <div class="countdown" id="clock_cp">
+                                <div>
+                                    <span class="days"></span>
+                                    <div class="smalltext">Days</div>
+                                </div>
+                                <div>
+                                    <span class="hours"></span>
+                                    <div class="smalltext">Hours</div>
+                                </div>
+                                <div>
+                                    <span class="minutes"></span>
+                                    <div class="smalltext">Minutes</div>
+                                </div>
+                                <div>
+                                    <span class="seconds"></span>
+                                    <div class="smalltext">Seconds</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"><br><br><br></div>
+    </div>
+    <script src="./js/countdown.js"></script>
+    <script>
+        initializeClock('clock_cp', new Date('Jun 16, 2023 20:00:00'));
+    </script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<!--<script src="./js/bootstrap.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+</body>
+</html>
