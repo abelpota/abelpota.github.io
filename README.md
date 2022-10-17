@@ -9,7 +9,7 @@
 |:----------------------------------------:| :-----------: |:-----------------------------------:| :--------------------------------------------:|:----------------------------------------:|
 |:white_check_mark: (Availible)            | index.html    | Homepage                            | `100%`                                        |:arrow_right: (01-08-22)                  |
 |:white_check_mark: (Availible)            | 2019.html     | Concerts of 2019                    | *Currently no score*                          |:no_entry: (xx-xx-xx)                     |
-|:white_check_mark: (Availible)            | 2023.html     | Concerts of 2023                    | *Currently no score*                          |:no_entry: (30-08-22)                     |
+|:arrows_counterclockwise: (Update soon)   | 2023.html     | Concerts of 2023                    | *Currently no score*                          |:no_entry: (30-08-22)                     |
 |:white_check_mark: (Availible)            | abel.html     | Homepage                            | `100%` (I think this is the best page)        |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | boring.html   | Play (web)games                     | `80%` (Only 3 games)                          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | calendar.html | Check the day                       | `30%` (Does not refresh)                      |:arrow_right: (xx-xx-xx)                  |
