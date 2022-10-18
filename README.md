@@ -34,11 +34,12 @@
 ###### :no_entry:= Score is not availible so it can't be increasd or decreasd
 ---
  #### Repo Info
-> ![GitHub last commit](https://img.shields.io/github/last-commit/abelpota/abelpota.github.io)
-> ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/abelpota/abelpota.github.io)
-> ![GitHub issues](https://img.shields.io/github/issues/abelpota/abelpota.github.io)
-> ![GitHub repo file count](https://img.shields.io/github/directory-file-count/abelpota/abelpota.github.io?label=files%20in%20abelpota.github.io)
-> ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/abelpota/abelpota.github.io?label=code%20size%20in%20abelpota.github.io)
+> ![GitHub last commit](https://img.shields.io/github/last-commit/abelpota/abelpota.github.io?logo=github)
+> ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/abelpota/abelpota.github.io?logo=github)
+> ![GitHub issues](https://img.shields.io/github/issues/abelpota/abelpota.github.io?logo=github)
+> ![GitHub repo file count](https://img.shields.io/github/directory-file-count/abelpota/abelpota.github.io?label=files%20in%20abelpota.github.io&logo=github)
+> ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/abelpota/abelpota.github.io?logo=github)
+> ![GitHub repo size](https://img.shields.io/github/repo-size/abelpota/abelpota.github.io?logo=github)
 #### Social info
 > ![GitHub Repo stars](https://img.shields.io/github/stars/abelpota/abelpota.github.io?label=Repo%20stars&style=social)
 > ![GitHub watchers](https://img.shields.io/github/watchers/abelpota/abelpota.github.io?label=Repo%20watchers&style=social)
