@@ -20,6 +20,7 @@
 |:white_check_mark: (Availible)            | pegi.html     | Check the recommanden age for games | `90%` (Few games availible but nice)          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | program.html  | Learn HTML & CSS                    | `---%` (The site is not complete)             |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | uj.html       | View changes                        | `90%` (The site is not always up-to-date)     |:arrow_right: (xx-xx-xx)                  |
+|:x: (Not availible)                       | weather.html  | *Waiting for release*               | `---%` (Not released)                         |:no_entry: (18-10-22)                     |
 |:white_check_mark: (Availible)            | web-tip.html  | Helpful websites                    | `90%`                                         |:arrow_upper_right: {Last +90%} (02-08-22)|
 |:white_check_mark: (Availible)            | zene.html     | Some music from spotify             | `90%`                                         |:arrow_right: (29-08-22)                  |
 
