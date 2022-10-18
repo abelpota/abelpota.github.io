@@ -5,12 +5,12 @@
 > #### Code status: [![CodeFactor](https://www.codefactor.io/repository/github/abelpota/abelpota.github.io/badge)](https://www.codefactor.io/repository/github/abelpota/abelpota.github.io)
 > ###### *Do you want CodeFactor? [Click here!](https://github.com/marketplace/codefactor)*
 ---
-|Availible                                 | Website       | Description                         | Recommendation to visit                       | Last update                              |
+|Availible                                 | Website       | Description                         | Recommendation to visit                       | Last update (DD-MM-YY)                   |
 |:----------------------------------------:| :-----------: |:-----------------------------------:| :--------------------------------------------:|:----------------------------------------:|
 |:white_check_mark: (Availible)            | index.html    | Homepage                            | `100%`                                        |:arrow_right: (01-08-22)                  |
 |:white_check_mark: (Availible)            | 2019.html     | Concerts of 2019                    | *Currently no score*                          |:no_entry: (xx-xx-xx)                     |
-|:arrows_counterclockwise: (Update soon)   | 2023.html     | Concerts of 2023                    | *Currently no score*                          |:no_entry: (30-08-22)                     |
-|:white_check_mark: (Availible)            | abel.html     | Homepage                            | `100%` (I think this is the best page)        |:arrow_right: (xx-xx-xx)                  |
+|:white_check_mark: (Availible)            | 2023.html     | Concerts of 2023                    | *Currently no score*                          |:no_entry: (18-10-22)                     |
+|:white_check_mark: (Availible)            | abel.html     | Homepage                            | `100%` (I think this is the best page)        |:arrow_right: (18-10-22)                  |
 |:white_check_mark: (Availible)            | boring.html   | Play (web)games                     | `80%` (Only 3 games)                          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | calendar.html | Check the day                       | `30%` (Does not refresh)                      |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | extension.html| Download helpful extensions         | `100%`                                        |:arrow_right: (01-08-22)                  |
