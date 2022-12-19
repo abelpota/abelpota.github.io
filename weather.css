@@ -1,0 +1,33 @@
+body {
+  background-color: blue;
+  animation: bg-animation 30s infinite;
+}
+@keyframes bg-animation {
+  0% {background-color: blue;}
+  50% {background-color: #00b7eb;}
+  100% {background-color: blue;}
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.inactive {
+  color: gray;
+  background-color: black;
+}
+.bad {
+  color: red;
+  background-color: black;
+}
+.upd {
+  color: cyan;
+  background-color: black;
+}
+.ok {
+  color: green;
+  background-color: black;
+}
+.warning {
+  color: orange;
+  background-color: black;
+}
