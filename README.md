@@ -10,7 +10,7 @@
 |:white_check_mark: (Availible)            | index.html    | Homepage                            | `100%`                                        |:arrow_right: (01-08-22)                  |
 |:white_check_mark: (Availible)            | 2019.html     | Concerts of 2019                    | *Currently no score*                          |:no_entry: (xx-xx-xx)                     |
 |:white_check_mark: (Availible)            | 2023.html     | Concerts of 2023                    | *Currently no score*                          |:no_entry: (18-10-22)                     |
-|:white_check_mark: (Availible)            | abel.html     | Homepage                            | `100%` (I think this is the best page)        |:arrow_right: (18-10-22)                  |
+|:white_check_mark: (Availible)            | abel.html     | Homepage                            | `100%` (I think this is the best page)        |:arrow_right: (19-12-22)                  |
 |:white_check_mark: (Availible)            | boring.html   | Play (web)games                     | `80%` (Only 3 games)                          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | calendar.html | Check the day                       | `30%` (Does not refresh)                      |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | extension.html| Download helpful extensions         | `100%`                                        |:arrow_right: (01-08-22)                  |
@@ -20,7 +20,7 @@
 |:white_check_mark: (Availible)            | pegi.html     | Check the recommanden age for games | `90%` (Few games availible but nice)          |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | program.html  | Learn HTML & CSS                    | `---%` (The site is not complete)             |:arrow_right: (xx-xx-xx)                  |
 |:white_check_mark: (Availible)            | uj.html       | View changes                        | `90%` (The site is not always up-to-date)     |:arrow_right: (xx-xx-xx)                  |
-|:arrows_counterclockwise: (Release <2h)   | weather.html  | *NR* View the weather               | `---%` (Not released)                         |:no_entry: (18-10-22)                     |
+|:arrows_counterclockwise: (Updateing)     | weather.html  | View the weather                    | `---%` (Not reviewd)                          |:no_entry: (19-12-22)                     |
 |:white_check_mark: (Availible)            | web-tip.html  | Helpful websites                    | `90%`                                         |:arrow_upper_right: {Last +90%} (02-08-22)|
 |:white_check_mark: (Availible)            | zene.html     | Some music from spotify             | `90%`                                         |:arrow_right: (29-08-22)                  |
 
