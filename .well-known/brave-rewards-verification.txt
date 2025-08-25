@@ -1,0 +1,4 @@
+This is a Brave Creators publisher verification file.
+
+Domain: abelpota.github.io
+Token: 68be2d79b571488409b3241ea384153be5c6989826bde5d2d5a5d58d30cb5072
