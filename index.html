@@ -8,6 +8,8 @@
 </head>
 <body>
     <div class="container">
+        <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
+
         <div class="game-header">
             <h1>Snake Game</h1>
             <div class="stats">
@@ -58,6 +60,28 @@
                 <p>Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move</p>
                 <p>Press <strong>Space</strong> to pause/resume</p>
                 <p>Press <strong>R</strong> to restart</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="closeSettings" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="themeToggle">Theme:</label>
+                    <div class="toggle-group">
+                        <button id="darkModeBtn" class="toggle-btn active">Dark</button>
+                        <button id="lightModeBtn" class="toggle-btn">Light</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <button id="eraseHighscoreBtn" class="btn btn-danger">Erase High Score</button>
+                </div>
             </div>
         </div>
     </div>

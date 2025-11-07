@@ -12,6 +12,14 @@ const overlay = document.getElementById('gameOverlay');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayMessage = document.getElementById('overlayMessage');
 
+// Settings elements
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const closeSettings = document.getElementById('closeSettings');
+const darkModeBtn = document.getElementById('darkModeBtn');
+const lightModeBtn = document.getElementById('lightModeBtn');
+const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
+
 // Game constants
 const GRID_SIZE = 20;
 const TILE_COUNT = canvas.width / GRID_SIZE;
@@ -124,7 +132,7 @@ function update() {
 
     // Check food collision
     if (head.x === food.x && head.y === food.y) {
-        score += 10;
+        score += 1;
         updateScore();
         generateFood();
     } else {
@@ -167,8 +175,9 @@ function draw() {
         );
 
         if (index === 0) {
-            // Head - brighter
-            gradient.addColorStop(0, '#667eea');
+            // Head - brighter with yellow accent
+            gradient.addColorStop(0, '#ffeb3b');
+            gradient.addColorStop(0.5, '#667eea');
             gradient.addColorStop(1, '#764ba2');
         } else {
             // Body - gradient fade
@@ -178,8 +187,15 @@ function draw() {
         }
 
         ctx.fillStyle = gradient;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#667eea';
+
+        if (index === 0) {
+            // Head - stronger glow
+            ctx.shadowBlur = 25;
+            ctx.shadowColor = '#ffeb3b';
+        } else {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#667eea';
+        }
 
         // Rounded rectangle
         const x = segment.x * GRID_SIZE + 2;
@@ -200,6 +216,51 @@ function draw() {
         ctx.quadraticCurveTo(x, y, x + radius, y);
         ctx.closePath();
         ctx.fill();
+
+        // Add eyes to the head
+        if (index === 0) {
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#1a1a2e';
+
+            // Determine eye positions based on direction
+            const centerX = segment.x * GRID_SIZE + GRID_SIZE / 2;
+            const centerY = segment.y * GRID_SIZE + GRID_SIZE / 2;
+            const eyeSize = 3;
+            const eyeOffset = 4;
+
+            let eye1X, eye1Y, eye2X, eye2Y;
+
+            if (dx === 1) { // Moving right
+                eye1X = centerX + eyeOffset;
+                eye1Y = centerY - eyeOffset;
+                eye2X = centerX + eyeOffset;
+                eye2Y = centerY + eyeOffset;
+            } else if (dx === -1) { // Moving left
+                eye1X = centerX - eyeOffset;
+                eye1Y = centerY - eyeOffset;
+                eye2X = centerX - eyeOffset;
+                eye2Y = centerY + eyeOffset;
+            } else if (dy === -1) { // Moving up
+                eye1X = centerX - eyeOffset;
+                eye1Y = centerY - eyeOffset;
+                eye2X = centerX + eyeOffset;
+                eye2Y = centerY - eyeOffset;
+            } else { // Moving down
+                eye1X = centerX - eyeOffset;
+                eye1Y = centerY + eyeOffset;
+                eye2X = centerX + eyeOffset;
+                eye2Y = centerY + eyeOffset;
+            }
+
+            // Draw eyes
+            ctx.beginPath();
+            ctx.arc(eye1X, eye1Y, eyeSize, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(eye2X, eye2Y, eyeSize, 0, Math.PI * 2);
+            ctx.fill();
+        }
     });
 
     // Reset shadow
@@ -331,39 +392,49 @@ document.addEventListener('keydown', (e) => {
     // Prevent input during pause or game over
     if (isPaused || isGameOver) return;
 
-    // IMPORTANT: Always validate against the CURRENT direction (dx, dy)
-    // NOT against what's in the queue, to prevent 180° turns
-    const currentDx = dx;
-    const currentDy = dy;
+    // Determine the reference direction for validation
+    // If queue is empty: validate against current direction (dx, dy)
+    // If queue has 1 move: validate against that queued move
+    // If queue has 2 moves: ignore (queue is full)
+    let referenceDx, referenceDy;
 
-    // Arrow keys and WASD - validate against CURRENT direction only
+    if (moveQueue.length === 0) {
+        // Validate against current direction
+        referenceDx = dx;
+        referenceDy = dy;
+    } else if (moveQueue.length === 1) {
+        // Validate against the queued move
+        referenceDx = moveQueue[0].dx;
+        referenceDy = moveQueue[0].dy;
+    } else {
+        // Queue is full, ignore input
+        return;
+    }
+
+    // Arrow keys and WASD - validate against reference direction
     let newDx = null;
     let newDy = null;
 
-    if ((e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') && currentDy === 0) {
+    if ((e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') && referenceDy === 0) {
         newDx = 0;
         newDy = -1;
-    } else if ((e.key === 'ArrowDown' || e.key.toLowerCase() === 's') && currentDy === 0) {
+    } else if ((e.key === 'ArrowDown' || e.key.toLowerCase() === 's') && referenceDy === 0) {
         newDx = 0;
         newDy = 1;
-    } else if ((e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') && currentDx === 0) {
+    } else if ((e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') && referenceDx === 0) {
         newDx = -1;
         newDy = 0;
-    } else if ((e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') && currentDx === 0) {
+    } else if ((e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') && referenceDx === 0) {
         newDx = 1;
         newDy = 0;
     }
 
-    // Only queue the move if it's valid from the CURRENT direction
+    // Only queue the move if it's valid
     if (newDx !== null && newDy !== null) {
-        // Only allow one move in the queue
-        // If queue is empty, add the move
-        // If queue already has a move, only replace if new move is still valid from current direction
-        if (moveQueue.length === 0) {
+        // Allow up to 2 moves in the queue
+        if (moveQueue.length < 2) {
             moveQueue.push({ dx: newDx, dy: newDy });
         }
-        // If there's already a queued move, ignore subsequent inputs
-        // This prevents chaining invalid turns
     }
 });
 
@@ -379,6 +450,55 @@ resumeBtn.addEventListener('click', () => {
 });
 
 difficultySelect.addEventListener('change', changeDifficulty);
+
+// Settings modal event listeners
+settingsBtn.addEventListener('click', () => {
+    settingsModal.classList.remove('hidden');
+});
+
+closeSettings.addEventListener('click', () => {
+    settingsModal.classList.add('hidden');
+});
+
+// Close modal when clicking outside
+settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+        settingsModal.classList.add('hidden');
+    }
+});
+
+// Theme toggle
+darkModeBtn.addEventListener('click', () => {
+    document.body.classList.remove('light-mode');
+    darkModeBtn.classList.add('active');
+    lightModeBtn.classList.remove('active');
+    localStorage.setItem('snakeTheme', 'dark');
+});
+
+lightModeBtn.addEventListener('click', () => {
+    document.body.classList.add('light-mode');
+    lightModeBtn.classList.add('active');
+    darkModeBtn.classList.remove('active');
+    localStorage.setItem('snakeTheme', 'light');
+});
+
+// Erase high score
+eraseHighscoreBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to erase your high score?')) {
+        localStorage.removeItem('snakeHighScore');
+        highScore = 0;
+        highScoreElement.textContent = highScore;
+        alert('High score has been erased!');
+    }
+});
+
+// Initialize theme from localStorage
+const savedTheme = localStorage.getItem('snakeTheme') || 'dark';
+if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    lightModeBtn.classList.add('active');
+    darkModeBtn.classList.remove('active');
+}
 
 // Initialize high score display
 highScoreElement.textContent = highScore;
