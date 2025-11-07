@@ -116,8 +116,8 @@ Game state is managed through module-level variables:
 - **Control Mode Toggle**: Switch between PC, Mobile, and Tablet modes
   - **Auto-detection**: On first visit, automatically detects device type (PC/Mobile/Tablet)
   - PC Mode: Keyboard controls with instruction panel, normal speed
-  - Mobile Mode: Touch D-pad controls below game, optimized mobile layout, 20% slower speed
-  - Tablet Mode: Touch D-pad controls to the right of game, 20% slower speed
+  - Mobile Mode: Touch D-pad controls below game, optimized mobile layout, 40% slower speed
+  - Tablet Mode: Touch D-pad controls to the right of game, 40% slower speed
   - Control mode preference saved in localStorage
   - **Dynamic Speed Adjustment**: Switching modes during gameplay updates speed in real-time
 - **Erase High Score**: Red button with confirmation dialog
@@ -132,7 +132,7 @@ Game state is managed through module-level variables:
 - Visual feedback on button press
 - Vertical layout (D-pad below canvas)
 - Prevents top/bottom overflow with proper spacing
-- **20% slower game speed** for fairer touch control (120ms easy, 120ms medium, 72ms hard)
+- **40% slower game speed** for fairer touch control (210ms easy, 140ms medium, 84ms hard)
 
 **Tablet Mode Features:**
 - Same touch-friendly D-pad controls as mobile
@@ -140,7 +140,7 @@ Game state is managed through module-level variables:
 - Horizontal layout (D-pad beside canvas)
 - Canvas max size: 60vw width, 70vh height
 - Better suited for landscape orientation
-- **20% slower game speed** for fairer touch control (same as mobile)
+- **40% slower game speed** for fairer touch control (same as mobile)
 
 **Auto-Detection System:**
 - Detects device type on first visit using user agent and touch capabilities
@@ -178,6 +178,14 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (20px per tile)
 
 ### Version
-Current version: **v1.0**
+Current version: **v2.0**
 - Displayed in top-right corner of the UI
+- **Version Format**: `vMAJOR.MINOR`
+  - **Major (first number)**: Incremented for new features or major updates
+  - **Minor (second number)**: Incremented for bug fixes and small changes
+  - Minor resets to 0 when major is incremented
 - Update this in both `index.html` and this documentation when releasing new versions
+
+**Version History:**
+- **v2.0**: Added tablet mode, fullscreen toggle, device auto-detection, and balanced mobile/tablet speed (40% slower)
+- **v1.0**: Initial release with dark theme, mobile mode, settings modal, and dynamic difficulty

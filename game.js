@@ -81,10 +81,10 @@ function startGameWithDifficulty(difficulty) {
     baseSpeed = settings.speed;
     currentSpeed = baseSpeed;
 
-    // Apply speed multiplier for mobile/tablet modes (20% slower)
+    // Apply speed multiplier for mobile/tablet modes (40% slower)
     if (document.body.classList.contains('mobile-mode') ||
         document.body.classList.contains('tablet-mode')) {
-        currentSpeed = Math.floor(currentSpeed * 1.2);
+        currentSpeed = Math.floor(currentSpeed * 1.4);
     }
 
     // Update canvas size
@@ -529,7 +529,7 @@ function updateGameSpeed() {
     // Recalculate speed based on current control mode
     if (document.body.classList.contains('mobile-mode') ||
         document.body.classList.contains('tablet-mode')) {
-        currentSpeed = Math.floor(baseSpeed * 1.2); // 20% slower
+        currentSpeed = Math.floor(baseSpeed * 1.4); // 40% slower
     } else {
         currentSpeed = baseSpeed;
     }
