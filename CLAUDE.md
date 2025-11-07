@@ -19,7 +19,7 @@ Simply open `index.html` in a web browser. No build step or server required.
 
 ### Game Loop Architecture
 
-The game uses a simple interval-based game loop (`setInterval`) that calls `update()` at speeds determined by difficulty level (60ms-150ms). The update function:
+The game uses a simple interval-based game loop (`setInterval`) that calls `update()` at speeds determined by difficulty level (30ms-150ms). The update function:
 1. Processes queued movement from `moveQueue`
 2. Calculates new snake head position
 3. Checks collisions (walls, self)
@@ -47,11 +47,12 @@ Example flow:
 
 ### Canvas Rendering
 
-The `draw()` function renders to a dynamically sized canvas with a 20px grid:
-- **Dynamic Canvas Sizing**: Canvas size changes based on difficulty
-  - Easy: 200x200px (10x10 tiles)
-  - Medium: 300x300px (15x15 tiles)
-  - Hard: 400x400px (20x20 tiles)
+The `draw()` function renders to a dynamically sized canvas with a 40px grid:
+- **Dynamic Canvas Sizing**: Canvas size changes based on difficulty (larger tiles for better visibility)
+  - Easy: 400x400px (10x10 tiles, 40px each)
+  - Medium: 600x600px (15x15 tiles, 40px each)
+  - Hard: 800x800px (20x20 tiles, 40px each)
+  - EXTREME: 1000x1000px (25x25 tiles, 40px each)
 - Grid background with subtle lines
 - Snake segments with gradient effects and shadows
 - **Snake head visual indicators**:
@@ -82,10 +83,12 @@ Game state is managed through module-level variables:
 
 **Game Mechanics:**
 - Score: 1 point per food collected
-- Three difficulty levels with dynamic canvas sizing:
+- **Separate high scores** saved for each difficulty level
+- Four difficulty levels with dynamic canvas sizing (40px tiles):
   - Easy: 10x10 tiles, 150ms speed
   - Medium: 15x15 tiles, 100ms speed
   - Hard: 20x20 tiles, 60ms speed
+  - **EXTREME**: 25x25 tiles, 30ms speed (extremely fast and challenging)
 - Toggleable wall collision mode (game over vs. wrap-around)
 - Pause/resume functionality (Space key or button)
 - Keyboard controls: WASD and Arrow keys
@@ -151,7 +154,11 @@ Game state is managed through module-level variables:
 - User can manually override at any time via settings
 
 **LocalStorage Persistence:**
-- High score (`snakeHighScore`)
+- Separate high scores per difficulty:
+  - `snakeHighScore_easy`
+  - `snakeHighScore_medium`
+  - `snakeHighScore_hard`
+  - `snakeHighScore_extreme`
 - Theme preference (`snakeTheme`)
 - Control mode preference (`snakeControlMode`)
 
@@ -163,7 +170,7 @@ Game state is managed through module-level variables:
 - Arrow keys won't trigger page scroll during gameplay
 
 **Canvas Sizing:**
-- Canvas size is dynamic based on difficulty (200px/300px/400px)
+- Canvas size is dynamic based on difficulty (400px/600px/800px/1000px with 40px tiles)
 - Uses `max-width: 100%` and adaptive `max-height` calculations
 - Maintains square aspect ratio without squashing
 - Minimum height constraints prevent over-compression
@@ -176,10 +183,10 @@ Game state is managed through module-level variables:
 - Game content wraps responsively on smaller screens
 - Mobile mode forces vertical column layout for better touch experience
 - Tablet mode uses horizontal row layout with D-pad on the right
-- All changes maintain the GRID_SIZE ratio (20px per tile)
+- All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v2.1**
+Current version: **v3.0**
 - Displayed in top-right corner of the UI
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -188,6 +195,7 @@ Current version: **v2.1**
 - Update this in both `index.html` and this documentation when releasing new versions
 
 **Version History:**
-- **v2.1**: Reduced grid sizes (10x10, 15x15, 20x20), added icons to control mode buttons, improved touch response
+- **v3.0**: Increased tile size to 40px (larger tiles with 400-1000px canvases), per-difficulty high score tracking, added EXTREME difficulty mode
+- **v2.1**: Added icons to control mode buttons (🖥️📱📲), improved touch response (touchstart)
 - **v2.0**: Added tablet mode, fullscreen toggle, device auto-detection, and balanced mobile/tablet speed (40% slower)
 - **v1.0**: Initial release with dark theme, mobile mode, settings modal, and dynamic difficulty

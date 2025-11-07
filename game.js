@@ -34,15 +34,16 @@ const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
 const mobileControls = document.getElementById('mobileControls');
 const dpadButtons = document.querySelectorAll('.dpad-btn');
 
-// Game constants
-const GRID_SIZE = 20;
-
-// Difficulty settings (speed in ms and canvas size)
+// Difficulty settings (speed in ms, tile count, and grid size)
 const DIFFICULTY_SETTINGS = {
-    easy: { speed: 150, canvasSize: 200 },    // 10x10 tiles
-    medium: { speed: 100, canvasSize: 300 },  // 15x15 tiles
-    hard: { speed: 60, canvasSize: 400 }      // 20x20 tiles
+    easy: { speed: 150, tiles: 10, gridSize: 40 },      // 10x10 tiles, 40px each = 400x400
+    medium: { speed: 100, tiles: 15, gridSize: 40 },    // 15x15 tiles, 40px each = 600x600
+    hard: { speed: 60, tiles: 20, gridSize: 40 },       // 20x20 tiles, 40px each = 800x800
+    extreme: { speed: 30, tiles: 25, gridSize: 40 }     // 25x25 tiles, 40px each = 1000x1000
 };
+
+let GRID_SIZE = 40;
+let currentDifficulty = 'medium';
 
 let TILE_COUNT = canvas.width / GRID_SIZE;
 
@@ -52,13 +53,23 @@ let food = {};
 let dx = 0;
 let dy = 0;
 let score = 0;
-let highScore = localStorage.getItem('snakeHighScore') || 0;
+let highScore = 0;
 let gameLoop = null;
 let isPaused = false;
 let isGameOver = false;
 let currentSpeed = DIFFICULTY_SETTINGS.medium.speed;
 let baseSpeed = DIFFICULTY_SETTINGS.medium.speed; // Base speed without multipliers
 let moveQueue = []; // Queue for storing next move
+
+// Function to get high score for current difficulty
+function getHighScore(difficulty) {
+    return parseInt(localStorage.getItem(`snakeHighScore_${difficulty}`)) || 0;
+}
+
+// Function to save high score for current difficulty
+function saveHighScore(difficulty, score) {
+    localStorage.setItem(`snakeHighScore_${difficulty}`, score);
+}
 
 // Screen management
 function showStartScreen() {
@@ -78,6 +89,7 @@ function showGameScreen() {
 
 function startGameWithDifficulty(difficulty) {
     const settings = DIFFICULTY_SETTINGS[difficulty];
+    currentDifficulty = difficulty;
     baseSpeed = settings.speed;
     currentSpeed = baseSpeed;
 
@@ -87,10 +99,15 @@ function startGameWithDifficulty(difficulty) {
         currentSpeed = Math.floor(currentSpeed * 1.4);
     }
 
-    // Update canvas size
-    canvas.width = settings.canvasSize;
-    canvas.height = settings.canvasSize;
-    TILE_COUNT = canvas.width / GRID_SIZE;
+    // Update grid size and canvas dimensions
+    GRID_SIZE = settings.gridSize;
+    TILE_COUNT = settings.tiles;
+    canvas.width = settings.tiles * settings.gridSize;
+    canvas.height = settings.tiles * settings.gridSize;
+
+    // Load high score for this difficulty
+    highScore = getHighScore(difficulty);
+    updateScore();
 
     // Show game screen and start game
     showGameScreen();
@@ -357,7 +374,7 @@ function updateScore() {
 
     if (score > highScore) {
         highScore = score;
-        localStorage.setItem('snakeHighScore', highScore);
+        saveHighScore(currentDifficulty, highScore);
     }
 
     highScoreElement.textContent = highScore;
@@ -666,11 +683,14 @@ function handleMobileInput(direction) {
 
 // Erase high score
 eraseHighscoreBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to erase your high score?')) {
-        localStorage.removeItem('snakeHighScore');
+    if (confirm('Are you sure you want to erase ALL high scores for ALL difficulties?')) {
+        localStorage.removeItem('snakeHighScore_easy');
+        localStorage.removeItem('snakeHighScore_medium');
+        localStorage.removeItem('snakeHighScore_hard');
+        localStorage.removeItem('snakeHighScore_extreme');
         highScore = 0;
         highScoreElement.textContent = highScore;
-        alert('High score has been erased!');
+        alert('All high scores have been erased!');
     }
 });
 
@@ -769,9 +789,6 @@ document.addEventListener('fullscreenchange', () => {
         fullscreenBtn.textContent = '⛶';
     }
 });
-
-// Initialize high score display
-highScoreElement.textContent = highScore;
 
 // Show start screen on load
 showStartScreen();
