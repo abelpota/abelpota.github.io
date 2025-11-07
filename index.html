@@ -10,6 +10,26 @@
     <div class="container">
         <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
 
+        <!-- Start Screen -->
+        <div id="startScreen" class="start-screen">
+            <h1 class="start-title">Snake Game</h1>
+            <p class="start-subtitle">Choose Your Difficulty</p>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn easy-btn" data-difficulty="easy">
+                    <span class="difficulty-name">Easy</span>
+                    <span class="difficulty-desc">20x20 Tiles • Slow Speed</span>
+                </button>
+                <button class="difficulty-btn medium-btn" data-difficulty="medium">
+                    <span class="difficulty-name">Medium</span>
+                    <span class="difficulty-desc">25x25 Tiles • Normal Speed</span>
+                </button>
+                <button class="difficulty-btn hard-btn" data-difficulty="hard">
+                    <span class="difficulty-name">Hard</span>
+                    <span class="difficulty-desc">30x30 Tiles • Fast Speed</span>
+                </button>
+            </div>
+        </div>
+
         <div class="game-header">
             <h1>Snake Game</h1>
             <div class="stats">
@@ -25,14 +45,6 @@
         </div>
 
         <div class="controls-panel">
-            <div class="control-group">
-                <label for="difficulty">Difficulty:</label>
-                <select id="difficulty">
-                    <option value="easy">Easy</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-            </div>
             <div class="control-group">
                 <label>
                     <input type="checkbox" id="wallMode" checked>
@@ -50,7 +62,10 @@
                     <div class="overlay-content">
                         <h2 id="overlayTitle">Game Paused</h2>
                         <p id="overlayMessage">Press Space or click Resume to continue</p>
-                        <button id="resumeBtn" class="btn btn-large">Resume</button>
+                        <div class="overlay-buttons">
+                            <button id="resumeBtn" class="btn btn-large">Resume</button>
+                            <button id="homeBtn" class="btn btn-large btn-secondary">Home</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,14 +3,20 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
-const difficultySelect = document.getElementById('difficulty');
 const wallModeCheckbox = document.getElementById('wallMode');
 const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
 const resumeBtn = document.getElementById('resumeBtn');
+const homeBtn = document.getElementById('homeBtn');
 const overlay = document.getElementById('gameOverlay');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayMessage = document.getElementById('overlayMessage');
+
+// Screen elements
+const startScreen = document.getElementById('startScreen');
+const gameHeader = document.querySelector('.game-header');
+const controlsPanel = document.querySelector('.controls-panel');
+const gameContent = document.querySelector('.game-content');
 
 // Settings elements
 const settingsBtn = document.getElementById('settingsBtn');
@@ -22,14 +28,15 @@ const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
 
 // Game constants
 const GRID_SIZE = 20;
-const TILE_COUNT = canvas.width / GRID_SIZE;
 
-// Difficulty settings (speed in ms)
-const DIFFICULTY_SPEEDS = {
-    easy: 150,
-    medium: 100,
-    hard: 60
+// Difficulty settings (speed in ms and canvas size)
+const DIFFICULTY_SETTINGS = {
+    easy: { speed: 150, canvasSize: 400 },
+    medium: { speed: 100, canvasSize: 500 },
+    hard: { speed: 60, canvasSize: 600 }
 };
+
+let TILE_COUNT = canvas.width / GRID_SIZE;
 
 // Game state
 let snake = [];
@@ -41,8 +48,38 @@ let highScore = localStorage.getItem('snakeHighScore') || 0;
 let gameLoop = null;
 let isPaused = false;
 let isGameOver = false;
-let currentSpeed = DIFFICULTY_SPEEDS.medium;
+let currentSpeed = DIFFICULTY_SETTINGS.medium.speed;
 let moveQueue = []; // Queue for storing next move
+
+// Screen management
+function showStartScreen() {
+    startScreen.classList.remove('hidden');
+    gameHeader.classList.add('hidden');
+    controlsPanel.classList.add('hidden');
+    gameContent.classList.add('hidden');
+    if (gameLoop) clearInterval(gameLoop);
+}
+
+function showGameScreen() {
+    startScreen.classList.add('hidden');
+    gameHeader.classList.remove('hidden');
+    controlsPanel.classList.remove('hidden');
+    gameContent.classList.remove('hidden');
+}
+
+function startGameWithDifficulty(difficulty) {
+    const settings = DIFFICULTY_SETTINGS[difficulty];
+    currentSpeed = settings.speed;
+
+    // Update canvas size
+    canvas.width = settings.canvasSize;
+    canvas.height = settings.canvasSize;
+    TILE_COUNT = canvas.width / GRID_SIZE;
+
+    // Show game screen and start game
+    showGameScreen();
+    initGame();
+}
 
 // Initialize game
 function initGame() {
@@ -318,6 +355,7 @@ function gameOver() {
     overlayTitle.textContent = 'Game Over!';
     overlayMessage.textContent = `Your score: ${score}`;
     resumeBtn.textContent = 'Play Again';
+    homeBtn.style.display = 'inline-block'; // Show home button on game over
     showOverlay();
 }
 
@@ -332,6 +370,7 @@ function togglePause() {
         overlayTitle.textContent = 'Game Paused';
         overlayMessage.textContent = 'Press Space or click Resume to continue';
         resumeBtn.textContent = 'Resume';
+        homeBtn.style.display = 'none'; // Hide home button when paused
         showOverlay();
     } else {
         pauseBtn.textContent = 'Pause';
@@ -353,17 +392,6 @@ function hideOverlay() {
 function restartGame() {
     if (gameLoop) clearInterval(gameLoop);
     initGame();
-}
-
-// Change difficulty
-function changeDifficulty() {
-    const difficulty = difficultySelect.value;
-    currentSpeed = DIFFICULTY_SPEEDS[difficulty];
-
-    if (!isPaused && !isGameOver) {
-        clearInterval(gameLoop);
-        gameLoop = setInterval(update, currentSpeed);
-    }
 }
 
 // Keyboard controls
@@ -449,8 +477,6 @@ resumeBtn.addEventListener('click', () => {
     }
 });
 
-difficultySelect.addEventListener('change', changeDifficulty);
-
 // Settings modal event listeners
 settingsBtn.addEventListener('click', () => {
     settingsModal.classList.remove('hidden');
@@ -500,8 +526,24 @@ if (savedTheme === 'light') {
     darkModeBtn.classList.remove('active');
 }
 
+// Difficulty selection from start screen
+document.querySelectorAll('.difficulty-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const difficulty = btn.dataset.difficulty;
+        startGameWithDifficulty(difficulty);
+    });
+});
+
+// Home button to return to start screen
+homeBtn.addEventListener('click', () => {
+    showStartScreen();
+    overlay.classList.add('hidden');
+    isPaused = false;
+    isGameOver = false;
+});
+
 // Initialize high score display
 highScoreElement.textContent = highScore;
 
-// Start game
-initGame();
+// Show start screen on load
+showStartScreen();
