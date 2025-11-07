@@ -39,9 +39,9 @@ const GRID_SIZE = 20;
 
 // Difficulty settings (speed in ms and canvas size)
 const DIFFICULTY_SETTINGS = {
-    easy: { speed: 150, canvasSize: 400 },
-    medium: { speed: 100, canvasSize: 500 },
-    hard: { speed: 60, canvasSize: 600 }
+    easy: { speed: 150, canvasSize: 200 },    // 10x10 tiles
+    medium: { speed: 100, canvasSize: 300 },  // 15x15 tiles
+    hard: { speed: 60, canvasSize: 400 }      // 20x20 tiles
 };
 
 let TILE_COUNT = canvas.width / GRID_SIZE;
@@ -573,20 +573,43 @@ tabletModeBtn.addEventListener('click', () => {
 
 // Mobile D-pad controls
 dpadButtons.forEach(btn => {
+    let touchHandled = false;
+
     btn.addEventListener('click', (e) => {
+        // Prevent click after touch
+        if (touchHandled) {
+            touchHandled = false;
+            return;
+        }
+
         if (isPaused || isGameOver) return;
 
         const direction = btn.dataset.direction;
         handleMobileInput(direction);
     });
 
-    // Touch support for better mobile experience
+    // Touch support for immediate response on mobile
     btn.addEventListener('touchstart', (e) => {
         e.preventDefault();
+        touchHandled = true;
+
         if (isPaused || isGameOver) return;
 
         const direction = btn.dataset.direction;
         handleMobileInput(direction);
+
+        // Add active class for visual feedback
+        btn.classList.add('dpad-active');
+    });
+
+    // Remove visual feedback on touch end
+    btn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        btn.classList.remove('dpad-active');
+    });
+
+    btn.addEventListener('touchcancel', (e) => {
+        btn.classList.remove('dpad-active');
     });
 });
 

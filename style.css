@@ -478,6 +478,12 @@ body.light-mode .fullscreen-btn {
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
+.dpad-btn.dpad-active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+}
+
 /* Mobile mode adjustments */
 body.mobile-mode .instructions {
     display: none;

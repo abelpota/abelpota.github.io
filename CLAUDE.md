@@ -49,9 +49,9 @@ Example flow:
 
 The `draw()` function renders to a dynamically sized canvas with a 20px grid:
 - **Dynamic Canvas Sizing**: Canvas size changes based on difficulty
-  - Easy: 400x400px (20x20 tiles)
-  - Medium: 500x500px (25x25 tiles)
-  - Hard: 600x600px (30x30 tiles)
+  - Easy: 200x200px (10x10 tiles)
+  - Medium: 300x300px (15x15 tiles)
+  - Hard: 400x400px (20x20 tiles)
 - Grid background with subtle lines
 - Snake segments with gradient effects and shadows
 - **Snake head visual indicators**:
@@ -83,9 +83,9 @@ Game state is managed through module-level variables:
 **Game Mechanics:**
 - Score: 1 point per food collected
 - Three difficulty levels with dynamic canvas sizing:
-  - Easy: 20x20 tiles, 150ms speed
-  - Medium: 25x25 tiles, 100ms speed
-  - Hard: 30x30 tiles, 60ms speed
+  - Easy: 10x10 tiles, 150ms speed
+  - Medium: 15x15 tiles, 100ms speed
+  - Hard: 20x20 tiles, 60ms speed
 - Toggleable wall collision mode (game over vs. wrap-around)
 - Pause/resume functionality (Space key or button)
 - Keyboard controls: WASD and Arrow keys
@@ -113,7 +113,7 @@ Game state is managed through module-level variables:
   - Dark: Dark purple gradient background (#1a0b2e to #2d1b4e) with dark UI, white fullscreen button
   - Light: Blue/pink gradient background with light gray canvas, purple fullscreen button
   - Theme preference saved in localStorage
-- **Control Mode Toggle**: Switch between PC, Mobile, and Tablet modes
+- **Control Mode Toggle**: Switch between PC, Mobile, and Tablet modes with icons (🖥️ PC, 📱 Mobile, 📲 Tablet)
   - **Auto-detection**: On first visit, automatically detects device type (PC/Mobile/Tablet)
   - PC Mode: Keyboard controls with instruction panel, normal speed
   - Mobile Mode: Touch D-pad controls below game, optimized mobile layout, 40% slower speed
@@ -125,11 +125,12 @@ Game state is managed through module-level variables:
 
 **Mobile Mode Features:**
 - Large touch-friendly D-pad controls (70x70px buttons) positioned below game
+- **Immediate touch response**: D-pad responds instantly on touchstart (not touchend)
+- Visual feedback with active state during touch
 - Hides keyboard instructions panel
 - Optimized canvas sizing for mobile viewport (35vh max-height)
 - Reduced padding and margins for compact layout
 - Touch and click event support for buttons
-- Visual feedback on button press
 - Vertical layout (D-pad below canvas)
 - Prevents top/bottom overflow with proper spacing
 - **40% slower game speed** for fairer touch control (210ms easy, 140ms medium, 84ms hard)
@@ -162,7 +163,7 @@ Game state is managed through module-level variables:
 - Arrow keys won't trigger page scroll during gameplay
 
 **Canvas Sizing:**
-- Canvas size is dynamic based on difficulty (400px/500px/600px)
+- Canvas size is dynamic based on difficulty (200px/300px/400px)
 - Uses `max-width: 100%` and adaptive `max-height` calculations
 - Maintains square aspect ratio without squashing
 - Minimum height constraints prevent over-compression
@@ -178,7 +179,7 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (20px per tile)
 
 ### Version
-Current version: **v2.0**
+Current version: **v2.1**
 - Displayed in top-right corner of the UI
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -187,5 +188,6 @@ Current version: **v2.0**
 - Update this in both `index.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v2.1**: Reduced grid sizes (10x10, 15x15, 20x20), added icons to control mode buttons, improved touch response
 - **v2.0**: Added tablet mode, fullscreen toggle, device auto-detection, and balanced mobile/tablet speed (40% slower)
 - **v1.0**: Initial release with dark theme, mobile mode, settings modal, and dynamic difficulty
