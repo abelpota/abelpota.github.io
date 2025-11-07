@@ -19,12 +19,20 @@ const controlsPanel = document.querySelector('.controls-panel');
 const gameContent = document.querySelector('.game-content');
 
 // Settings elements
+const fullscreenBtn = document.getElementById('fullscreenBtn');
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsModal = document.getElementById('settingsModal');
 const closeSettings = document.getElementById('closeSettings');
 const darkModeBtn = document.getElementById('darkModeBtn');
 const lightModeBtn = document.getElementById('lightModeBtn');
+const pcModeBtn = document.getElementById('pcModeBtn');
+const mobileModeBtn = document.getElementById('mobileModeBtn');
+const tabletModeBtn = document.getElementById('tabletModeBtn');
 const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
+
+// Mobile controls
+const mobileControls = document.getElementById('mobileControls');
+const dpadButtons = document.querySelectorAll('.dpad-btn');
 
 // Game constants
 const GRID_SIZE = 20;
@@ -508,6 +516,103 @@ lightModeBtn.addEventListener('click', () => {
     localStorage.setItem('snakeTheme', 'light');
 });
 
+// Control mode toggle
+pcModeBtn.addEventListener('click', () => {
+    document.body.classList.remove('mobile-mode', 'tablet-mode');
+    pcModeBtn.classList.add('active');
+    mobileModeBtn.classList.remove('active');
+    tabletModeBtn.classList.remove('active');
+    localStorage.setItem('snakeControlMode', 'pc');
+});
+
+mobileModeBtn.addEventListener('click', () => {
+    document.body.classList.remove('tablet-mode');
+    document.body.classList.add('mobile-mode');
+    mobileModeBtn.classList.add('active');
+    pcModeBtn.classList.remove('active');
+    tabletModeBtn.classList.remove('active');
+    localStorage.setItem('snakeControlMode', 'mobile');
+});
+
+tabletModeBtn.addEventListener('click', () => {
+    document.body.classList.remove('mobile-mode');
+    document.body.classList.add('tablet-mode');
+    tabletModeBtn.classList.add('active');
+    pcModeBtn.classList.remove('active');
+    mobileModeBtn.classList.remove('active');
+    localStorage.setItem('snakeControlMode', 'tablet');
+});
+
+// Mobile D-pad controls
+dpadButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        if (isPaused || isGameOver) return;
+
+        const direction = btn.dataset.direction;
+        handleMobileInput(direction);
+    });
+
+    // Touch support for better mobile experience
+    btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (isPaused || isGameOver) return;
+
+        const direction = btn.dataset.direction;
+        handleMobileInput(direction);
+    });
+});
+
+function handleMobileInput(direction) {
+    // Determine the reference direction for validation
+    let referenceDx, referenceDy;
+
+    if (moveQueue.length === 0) {
+        referenceDx = dx;
+        referenceDy = dy;
+    } else if (moveQueue.length === 1) {
+        referenceDx = moveQueue[0].dx;
+        referenceDy = moveQueue[0].dy;
+    } else {
+        return; // Queue is full
+    }
+
+    let newDx = null;
+    let newDy = null;
+
+    switch(direction) {
+        case 'up':
+            if (referenceDy === 0) {
+                newDx = 0;
+                newDy = -1;
+            }
+            break;
+        case 'down':
+            if (referenceDy === 0) {
+                newDx = 0;
+                newDy = 1;
+            }
+            break;
+        case 'left':
+            if (referenceDx === 0) {
+                newDx = -1;
+                newDy = 0;
+            }
+            break;
+        case 'right':
+            if (referenceDx === 0) {
+                newDx = 1;
+                newDy = 0;
+            }
+            break;
+    }
+
+    if (newDx !== null && newDy !== null) {
+        if (moveQueue.length < 2) {
+            moveQueue.push({ dx: newDx, dy: newDy });
+        }
+    }
+}
+
 // Erase high score
 eraseHighscoreBtn.addEventListener('click', () => {
     if (confirm('Are you sure you want to erase your high score?')) {
@@ -526,6 +631,20 @@ if (savedTheme === 'light') {
     darkModeBtn.classList.remove('active');
 }
 
+// Initialize control mode from localStorage
+const savedControlMode = localStorage.getItem('snakeControlMode') || 'pc';
+if (savedControlMode === 'mobile') {
+    document.body.classList.add('mobile-mode');
+    mobileModeBtn.classList.add('active');
+    pcModeBtn.classList.remove('active');
+    tabletModeBtn.classList.remove('active');
+} else if (savedControlMode === 'tablet') {
+    document.body.classList.add('tablet-mode');
+    tabletModeBtn.classList.add('active');
+    pcModeBtn.classList.remove('active');
+    mobileModeBtn.classList.remove('active');
+}
+
 // Difficulty selection from start screen
 document.querySelectorAll('.difficulty-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -540,6 +659,31 @@ homeBtn.addEventListener('click', () => {
     overlay.classList.add('hidden');
     isPaused = false;
     isGameOver = false;
+});
+
+// Fullscreen toggle
+fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+        // Enter fullscreen
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log('Error attempting to enable fullscreen:', err);
+        });
+        fullscreenBtn.textContent = '⛶';
+    } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+});
+
+// Update fullscreen button when fullscreen state changes
+document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+        fullscreenBtn.textContent = '⛶';
+    } else {
+        fullscreenBtn.textContent = '⛶';
+    }
 });
 
 // Initialize high score display

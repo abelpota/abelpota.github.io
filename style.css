@@ -36,6 +36,35 @@ body {
     position: relative;
 }
 
+.fullscreen-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+    z-index: 10;
+}
+
+.fullscreen-btn:hover {
+    transform: scale(1.2);
+}
+
+.version-number {
+    position: absolute;
+    top: 20px;
+    right: 70px;
+    color: #a78bfa;
+    font-size: 0.9em;
+    font-weight: 600;
+    z-index: 10;
+    opacity: 0.7;
+}
+
 .settings-btn {
     position: absolute;
     top: 20px;
@@ -378,6 +407,148 @@ body {
 .instructions strong {
     color: #a78bfa;
     font-weight: 600;
+}
+
+/* Mobile Touch Controls */
+.mobile-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.mobile-controls.hidden {
+    display: none;
+}
+
+.dpad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.dpad-middle {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.dpad-center {
+    width: 70px;
+    height: 70px;
+    background: rgba(50, 40, 70, 0.3);
+    border-radius: 10px;
+    border: 2px solid rgba(167, 139, 250, 0.2);
+}
+
+.dpad-btn {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dpad-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+}
+
+.dpad-btn:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Mobile mode adjustments */
+body.mobile-mode .instructions {
+    display: none;
+}
+
+body.mobile-mode .mobile-controls {
+    display: flex;
+}
+
+body.mobile-mode .game-content {
+    flex-direction: column;
+    align-items: center;
+}
+
+body.mobile-mode .controls-panel {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+body.mobile-mode .container {
+    padding: 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+body.mobile-mode .game-header {
+    margin-bottom: 10px;
+}
+
+body.mobile-mode .game-header h1 {
+    font-size: 1.5em;
+}
+
+body.mobile-mode .stat-value {
+    font-size: 1.2em;
+}
+
+body.mobile-mode #gameCanvas {
+    max-width: calc(100vw - 40px);
+    max-height: 35vh;
+    min-height: 250px;
+}
+
+body.mobile-mode .controls-panel {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+body.mobile-mode .mobile-controls {
+    padding: 10px;
+}
+
+body.mobile-mode .start-title {
+    font-size: 2.5em;
+}
+
+/* Tablet mode adjustments */
+body.tablet-mode .instructions {
+    display: none;
+}
+
+body.tablet-mode .mobile-controls {
+    display: flex;
+}
+
+body.tablet-mode .game-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+body.tablet-mode .game-wrapper {
+    flex-shrink: 1;
+}
+
+body.tablet-mode #gameCanvas {
+    max-width: 60vw;
+    max-height: 70vh;
 }
 
 /* Modal Styles */
