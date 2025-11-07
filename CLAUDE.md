@@ -110,14 +110,16 @@ Game state is managed through module-level variables:
 **Settings System:**
 - Gear icon button in top-right corner opens modal
 - **Theme Toggle**: Switch between Dark mode (default) and Light mode
-  - Dark: Dark purple gradient background (#1a0b2e to #2d1b4e) with dark UI
-  - Light: Blue/pink gradient background with light gray canvas
+  - Dark: Dark purple gradient background (#1a0b2e to #2d1b4e) with dark UI, white fullscreen button
+  - Light: Blue/pink gradient background with light gray canvas, purple fullscreen button
   - Theme preference saved in localStorage
 - **Control Mode Toggle**: Switch between PC, Mobile, and Tablet modes
-  - PC Mode: Keyboard controls with instruction panel
-  - Mobile Mode: Touch D-pad controls below game, optimized mobile layout
-  - Tablet Mode: Touch D-pad controls to the right of game
+  - **Auto-detection**: On first visit, automatically detects device type (PC/Mobile/Tablet)
+  - PC Mode: Keyboard controls with instruction panel, normal speed
+  - Mobile Mode: Touch D-pad controls below game, optimized mobile layout, 20% slower speed
+  - Tablet Mode: Touch D-pad controls to the right of game, 20% slower speed
   - Control mode preference saved in localStorage
+  - **Dynamic Speed Adjustment**: Switching modes during gameplay updates speed in real-time
 - **Erase High Score**: Red button with confirmation dialog
 - Settings modal can be closed via × button or clicking outside
 
@@ -130,6 +132,7 @@ Game state is managed through module-level variables:
 - Visual feedback on button press
 - Vertical layout (D-pad below canvas)
 - Prevents top/bottom overflow with proper spacing
+- **20% slower game speed** for fairer touch control (120ms easy, 120ms medium, 72ms hard)
 
 **Tablet Mode Features:**
 - Same touch-friendly D-pad controls as mobile
@@ -137,6 +140,14 @@ Game state is managed through module-level variables:
 - Horizontal layout (D-pad beside canvas)
 - Canvas max size: 60vw width, 70vh height
 - Better suited for landscape orientation
+- **20% slower game speed** for fairer touch control (same as mobile)
+
+**Auto-Detection System:**
+- Detects device type on first visit using user agent and touch capabilities
+- Checks for iPad, Android tablets, and screen size (768-1024px = tablet)
+- Mobile phones detected by touch + small screen (<768px) or mobile user agent
+- Falls back to PC mode for desktop browsers
+- User can manually override at any time via settings
 
 **LocalStorage Persistence:**
 - High score (`snakeHighScore`)

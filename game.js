@@ -57,6 +57,7 @@ let gameLoop = null;
 let isPaused = false;
 let isGameOver = false;
 let currentSpeed = DIFFICULTY_SETTINGS.medium.speed;
+let baseSpeed = DIFFICULTY_SETTINGS.medium.speed; // Base speed without multipliers
 let moveQueue = []; // Queue for storing next move
 
 // Screen management
@@ -77,7 +78,14 @@ function showGameScreen() {
 
 function startGameWithDifficulty(difficulty) {
     const settings = DIFFICULTY_SETTINGS[difficulty];
-    currentSpeed = settings.speed;
+    baseSpeed = settings.speed;
+    currentSpeed = baseSpeed;
+
+    // Apply speed multiplier for mobile/tablet modes (20% slower)
+    if (document.body.classList.contains('mobile-mode') ||
+        document.body.classList.contains('tablet-mode')) {
+        currentSpeed = Math.floor(currentSpeed * 1.2);
+    }
 
     // Update canvas size
     canvas.width = settings.canvasSize;
@@ -516,6 +524,23 @@ lightModeBtn.addEventListener('click', () => {
     localStorage.setItem('snakeTheme', 'light');
 });
 
+// Function to update game speed based on control mode
+function updateGameSpeed() {
+    // Recalculate speed based on current control mode
+    if (document.body.classList.contains('mobile-mode') ||
+        document.body.classList.contains('tablet-mode')) {
+        currentSpeed = Math.floor(baseSpeed * 1.2); // 20% slower
+    } else {
+        currentSpeed = baseSpeed;
+    }
+
+    // If game is running, restart the game loop with new speed
+    if (gameLoop && !isPaused && !isGameOver) {
+        clearInterval(gameLoop);
+        gameLoop = setInterval(update, currentSpeed);
+    }
+}
+
 // Control mode toggle
 pcModeBtn.addEventListener('click', () => {
     document.body.classList.remove('mobile-mode', 'tablet-mode');
@@ -523,6 +548,7 @@ pcModeBtn.addEventListener('click', () => {
     mobileModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     localStorage.setItem('snakeControlMode', 'pc');
+    updateGameSpeed();
 });
 
 mobileModeBtn.addEventListener('click', () => {
@@ -532,6 +558,7 @@ mobileModeBtn.addEventListener('click', () => {
     pcModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     localStorage.setItem('snakeControlMode', 'mobile');
+    updateGameSpeed();
 });
 
 tabletModeBtn.addEventListener('click', () => {
@@ -541,6 +568,7 @@ tabletModeBtn.addEventListener('click', () => {
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
     localStorage.setItem('snakeControlMode', 'tablet');
+    updateGameSpeed();
 });
 
 // Mobile D-pad controls
@@ -631,8 +659,37 @@ if (savedTheme === 'light') {
     darkModeBtn.classList.remove('active');
 }
 
-// Initialize control mode from localStorage
-const savedControlMode = localStorage.getItem('snakeControlMode') || 'pc';
+// Detect device type
+function detectDeviceType() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Check for tablet
+    const isTablet = isTouchDevice && (
+        /ipad/.test(userAgent) ||
+        (/android/.test(userAgent) && !/mobile/.test(userAgent)) ||
+        (window.innerWidth >= 768 && window.innerWidth <= 1024)
+    );
+
+    // Check for mobile phone
+    const isMobile = isTouchDevice && !isTablet && (
+        /iphone|ipod|android.*mobile|blackberry|opera mini|iemobile|windows phone/.test(userAgent) ||
+        window.innerWidth < 768
+    );
+
+    if (isTablet) return 'tablet';
+    if (isMobile) return 'mobile';
+    return 'pc';
+}
+
+// Initialize control mode from localStorage or auto-detect
+let savedControlMode = localStorage.getItem('snakeControlMode');
+if (!savedControlMode) {
+    // First time visit - auto-detect device
+    savedControlMode = detectDeviceType();
+    localStorage.setItem('snakeControlMode', savedControlMode);
+}
+
 if (savedControlMode === 'mobile') {
     document.body.classList.add('mobile-mode');
     mobileModeBtn.classList.add('active');
@@ -643,6 +700,10 @@ if (savedControlMode === 'mobile') {
     tabletModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
+} else {
+    pcModeBtn.classList.add('active');
+    mobileModeBtn.classList.remove('active');
+    tabletModeBtn.classList.remove('active');
 }
 
 // Difficulty selection from start screen

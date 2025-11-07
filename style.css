@@ -48,10 +48,17 @@ body {
     line-height: 1;
     transition: transform 0.3s ease;
     z-index: 10;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .fullscreen-btn:hover {
     transform: scale(1.2);
+}
+
+body.light-mode .fullscreen-btn {
+    color: #667eea;
+    text-shadow: none;
 }
 
 .version-number {
