@@ -15,6 +15,7 @@ const overlayMessage = document.getElementById('overlayMessage');
 
 // Screen elements
 const startScreen = document.getElementById('startScreen');
+const customScreen = document.getElementById('customScreen');
 const gameHeader = document.querySelector('.game-header');
 const controlsPanel = document.querySelector('.controls-panel');
 const gameContent = document.querySelector('.game-content');
@@ -34,6 +35,15 @@ const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
 // Mobile controls
 const mobileControls = document.getElementById('mobileControls');
 const dpadButtons = document.querySelectorAll('.dpad-btn');
+
+// Custom mode elements
+const customSizeSlider = document.getElementById('customSize');
+const customSpeedSlider = document.getElementById('customSpeed');
+const customSizeValue = document.getElementById('customSizeValue');
+const customSizeValue2 = document.getElementById('customSizeValue2');
+const customSpeedValue = document.getElementById('customSpeedValue');
+const startCustomBtn = document.getElementById('startCustomBtn');
+const backToMenuBtn = document.getElementById('backToMenuBtn');
 
 // Difficulty settings (speed in ms, tile count, and grid size)
 const DIFFICULTY_SETTINGS = {
@@ -75,14 +85,24 @@ function saveHighScore(difficulty, score) {
 // Screen management
 function showStartScreen() {
     startScreen.classList.remove('hidden');
+    customScreen.classList.add('hidden');
     gameHeader.classList.add('hidden');
     controlsPanel.classList.add('hidden');
     gameContent.classList.add('hidden');
     if (gameLoop) clearInterval(gameLoop);
 }
 
+function showCustomScreen() {
+    startScreen.classList.add('hidden');
+    customScreen.classList.remove('hidden');
+    gameHeader.classList.add('hidden');
+    controlsPanel.classList.add('hidden');
+    gameContent.classList.add('hidden');
+}
+
 function showGameScreen() {
     startScreen.classList.add('hidden');
+    customScreen.classList.add('hidden');
     gameHeader.classList.remove('hidden');
     controlsPanel.classList.remove('hidden');
     gameContent.classList.remove('hidden');
@@ -108,6 +128,32 @@ function startGameWithDifficulty(difficulty) {
 
     // Load high score for this difficulty
     highScore = getHighScore(difficulty);
+    updateScore();
+
+    // Show game screen and start game
+    showGameScreen();
+    initGame();
+}
+
+function startCustomGame(tiles, speed) {
+    currentDifficulty = 'custom';
+    baseSpeed = speed;
+    currentSpeed = baseSpeed;
+
+    // Apply speed multiplier for mobile/tablet modes (40% slower)
+    if (document.body.classList.contains('mobile-mode') ||
+        document.body.classList.contains('tablet-mode')) {
+        currentSpeed = Math.floor(currentSpeed * 1.4);
+    }
+
+    // Update grid size and canvas dimensions
+    GRID_SIZE = 40;
+    TILE_COUNT = tiles;
+    canvas.width = tiles * 40;
+    canvas.height = tiles * 40;
+
+    // Load high score for custom mode
+    highScore = getHighScore('custom');
     updateScore();
 
     // Show game screen and start game
@@ -729,6 +775,7 @@ eraseHighscoreBtn.addEventListener('click', () => {
         localStorage.removeItem('snakeHighScore_medium');
         localStorage.removeItem('snakeHighScore_hard');
         localStorage.removeItem('snakeHighScore_extreme');
+        localStorage.removeItem('snakeHighScore_custom');
         highScore = 0;
         highScoreElement.textContent = highScore;
         alert('All high scores have been erased!');
@@ -794,7 +841,11 @@ if (savedControlMode === 'mobile') {
 document.querySelectorAll('.difficulty-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const difficulty = btn.dataset.difficulty;
-        startGameWithDifficulty(difficulty);
+        if (difficulty === 'custom') {
+            showCustomScreen();
+        } else {
+            startGameWithDifficulty(difficulty);
+        }
     });
 });
 
@@ -804,6 +855,30 @@ homeBtn.addEventListener('click', () => {
     overlay.classList.add('hidden');
     isPaused = false;
     isGameOver = false;
+});
+
+// Custom mode slider updates
+customSizeSlider.addEventListener('input', (e) => {
+    const value = e.target.value;
+    customSizeValue.textContent = value;
+    customSizeValue2.textContent = value;
+});
+
+customSpeedSlider.addEventListener('input', (e) => {
+    const value = e.target.value;
+    customSpeedValue.textContent = value;
+});
+
+// Start custom game
+startCustomBtn.addEventListener('click', () => {
+    const tiles = parseInt(customSizeSlider.value);
+    const speed = parseInt(customSpeedSlider.value);
+    startCustomGame(tiles, speed);
+});
+
+// Back to menu button
+backToMenuBtn.addEventListener('click', () => {
+    showStartScreen();
 });
 
 // Fullscreen toggle
