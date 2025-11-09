@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
+        <span class="version-number">v4.1</span>
+        <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="start-screen">
+            <h1 class="start-title">Snake Game</h1>
+            <p class="start-subtitle">Choose Your Difficulty</p>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn easy-btn" data-difficulty="easy">
+                    <span class="difficulty-name">Easy</span>
+                    <span class="difficulty-desc">10x10 Tiles • Slow Speed</span>
+                </button>
+                <button class="difficulty-btn medium-btn" data-difficulty="medium">
+                    <span class="difficulty-name">Medium</span>
+                    <span class="difficulty-desc">15x15 Tiles • Normal Speed</span>
+                </button>
+                <button class="difficulty-btn hard-btn" data-difficulty="hard">
+                    <span class="difficulty-name">Hard</span>
+                    <span class="difficulty-desc">20x20 Tiles • Fast Speed</span>
+                </button>
+                <button class="difficulty-btn extreme-btn" data-difficulty="extreme">
+                    <span class="difficulty-name">EXTREME</span>
+                    <span class="difficulty-desc">25x25 Tiles • Lightning Fast</span>
+                </button>
+                <button class="difficulty-btn custom-btn" data-difficulty="custom">
+                    <span class="difficulty-name">Custom</span>
+                    <span class="difficulty-desc">Customize Size & Speed</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Custom Settings Screen -->
+        <div id="customScreen" class="custom-screen hidden">
+            <h1 class="custom-title">Custom Game</h1>
+            <p class="custom-subtitle">Customize Your Experience</p>
+            <div class="custom-controls">
+                <div class="custom-control-group">
+                    <label for="customSize">Map Size: <span id="customSizeValue">15</span>x<span id="customSizeValue2">15</span></label>
+                    <input type="range" id="customSize" min="10" max="30" value="15" step="1">
+                    <span class="custom-hint">10-30 tiles</span>
+                </div>
+                <div class="custom-control-group">
+                    <label for="customSpeed">Speed: <span id="customSpeedValue">100</span>ms</label>
+                    <input type="range" id="customSpeed" min="20" max="200" value="100" step="10">
+                    <span class="custom-hint">20ms (fastest) - 200ms (slowest)</span>
+                </div>
+                <div class="custom-buttons">
+                    <button id="startCustomBtn" class="btn-primary">Start Game</button>
+                    <button id="backToMenuBtn" class="btn-secondary">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-header">
+            <h1>Snake Game</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Score:</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span id="highScoreLabel" class="stat-label">High Score:</span>
+                    <span id="highScore" class="stat-value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="wallMode" checked>
+                    Wall Collision (Game Over)
+                </label>
+            </div>
+            <button id="pauseBtn" class="btn">Pause</button>
+            <button id="restartBtn" class="btn">Restart</button>
+        </div>
+
+        <div class="game-content">
+            <div class="game-wrapper">
+                <canvas id="gameCanvas" width="500" height="500"></canvas>
+                <div id="gameOverlay" class="overlay hidden">
+                    <div class="overlay-content">
+                        <h2 id="overlayTitle">Game Paused</h2>
+                        <p id="overlayMessage">Press Space or click Resume to continue</p>
+                        <div class="overlay-buttons">
+                            <button id="resumeBtn" class="btn btn-large">Resume</button>
+                            <button id="homeBtn" class="btn btn-large btn-secondary">Home</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>Controls</h3>
+                <p>Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move</p>
+                <p>Press <strong>Space</strong> to pause/resume</p>
+                <p>Press <strong>R</strong> to restart</p>
+            </div>
+
+            <!-- Mobile Touch Controls -->
+            <div id="mobileControls" class="mobile-controls hidden">
+                <div class="dpad-container">
+                    <button class="dpad-btn dpad-up" data-direction="up">▲</button>
+                    <div class="dpad-middle">
+                        <button class="dpad-btn dpad-left" data-direction="left">◀</button>
+                        <div class="dpad-center"></div>
+                        <button class="dpad-btn dpad-right" data-direction="right">▶</button>
+                    </div>
+                    <button class="dpad-btn dpad-down" data-direction="down">▼</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="closeSettings" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="themeToggle">Theme:</label>
+                    <div class="toggle-group">
+                        <button id="darkModeBtn" class="toggle-btn active">Dark</button>
+                        <button id="lightModeBtn" class="toggle-btn">Light</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label for="controlModeToggle">Control Mode:</label>
+                    <div class="toggle-group">
+                        <button id="pcModeBtn" class="toggle-btn active">🖥️ PC</button>
+                        <button id="mobileModeBtn" class="toggle-btn">📱 Mobile</button>
+                        <button id="tabletModeBtn" class="toggle-btn">📲 Tablet</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <button id="eraseHighscoreBtn" class="btn btn-danger">Erase High Score</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
