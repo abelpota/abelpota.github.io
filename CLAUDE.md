@@ -195,7 +195,7 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v4.1**
+Current version: **v4.2**
 - Displayed in top-right corner of the UI (in snake.html)
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -204,6 +204,7 @@ Current version: **v4.1**
 - Update this in both `snake.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v4.2**: Added home button (🏠) in Snake game to navigate back to homepage
 - **v4.1**: Created homepage portal (index.html) with game tile navigation, moved Snake game to snake.html
 - **v4.0**: Added Custom game mode with adjustable map size (10-30 tiles) and speed (20-200ms)
 - **v3.2**: Snake waits for first player input before moving (keyboard and mobile D-pad support)
