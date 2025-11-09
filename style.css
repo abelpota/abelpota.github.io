@@ -251,16 +251,16 @@ body.light-mode .settings-btn .material-symbols-outlined {
 }
 
 .custom-btn {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-    border: 2px solid #fbbf24;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .custom-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6);
-    border-color: #fcd34d;
+    box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Custom Settings Screen */
@@ -275,9 +275,12 @@ body.light-mode .settings-btn .material-symbols-outlined {
 
 .custom-title {
     font-size: 3em;
-    color: #f59e0b;
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    text-shadow: none;
 }
 
 .custom-subtitle {
@@ -305,7 +308,10 @@ body.light-mode .settings-btn .material-symbols-outlined {
 }
 
 .custom-control-group label span {
-    color: #f59e0b;
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .custom-control-group input[type="range"] {
@@ -323,20 +329,20 @@ body.light-mode .settings-btn .material-symbols-outlined {
     appearance: none;
     width: 20px;
     height: 20px;
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 }
 
 .custom-control-group input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
     border-radius: 50%;
     cursor: pointer;
     border: none;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 }
 
 .custom-hint {
@@ -362,14 +368,14 @@ body.light-mode .settings-btn .material-symbols-outlined {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, #10b981 0%, #f59e0b 25%, #ef4444 50%, #8b5cf6 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
 }
 
 .btn-secondary {
