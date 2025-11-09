@@ -14,10 +14,109 @@
             <span class="material-symbols-outlined">home</span>
         </a>
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number">v4.4</span>
+        <span class="version-number" id="versionNumber" title="View Changelog">v4.5</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">
             <span class="material-symbols-outlined">settings</span>
         </button>
+
+        <!-- Changelog Modal -->
+        <div id="changelogModal" class="modal hidden">
+            <div class="modal-content changelog-content">
+                <span class="close-btn" id="closeChangelog">&times;</span>
+                <h2>Version History</h2>
+                <div class="changelog-list">
+                    <div class="changelog-item">
+                        <h3>v4.5</h3>
+                        <ul>
+                            <li>Added clickable version history modal</li>
+                            <li>Improved changelog styling for dark and light modes</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.4</h3>
+                        <ul>
+                            <li>Added browser tab icons for homepage and game</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.3</h3>
+                        <ul>
+                            <li>Custom mode now features multi-color gradient combining all difficulty colors</li>
+                            <li>Rebranded to OciGames</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.2</h3>
+                        <ul>
+                            <li>Added home button to return to homepage</li>
+                            <li>Replaced emoji icons with Material Icons</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.1</h3>
+                        <ul>
+                            <li>Created homepage portal with game tiles</li>
+                            <li>Snake game moved to dedicated page</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.0</h3>
+                        <ul>
+                            <li>Added Custom game mode with adjustable map size (10-30 tiles)</li>
+                            <li>Added adjustable speed slider (20-200ms)</li>
+                            <li>Custom mode has separate high score tracking</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v3.2</h3>
+                        <ul>
+                            <li>Snake now waits for first player input before moving</li>
+                            <li>Works with both keyboard and mobile controls</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v3.1</h3>
+                        <ul>
+                            <li>High score labels now show difficulty name</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v3.0</h3>
+                        <ul>
+                            <li>Increased tile size to 40px for better visibility</li>
+                            <li>Each difficulty now tracks its own high score</li>
+                            <li>Added EXTREME difficulty mode (25×25 tiles, lightning fast)</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v2.1</h3>
+                        <ul>
+                            <li>Added icons to control mode buttons</li>
+                            <li>Improved mobile D-pad touch response</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v2.0</h3>
+                        <ul>
+                            <li>Added Tablet mode with D-pad on the side</li>
+                            <li>Added fullscreen toggle button</li>
+                            <li>Automatic device type detection</li>
+                            <li>Mobile and tablet modes are 40% slower for easier control</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v1.0</h3>
+                        <ul>
+                            <li>Initial release with classic Snake gameplay</li>
+                            <li>Three difficulty levels (Easy, Medium, Hard)</li>
+                            <li>Dark and Light theme options</li>
+                            <li>Mobile mode with touch controls</li>
+                            <li>Settings modal with customization options</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Start Screen -->
         <div id="startScreen" class="start-screen">
