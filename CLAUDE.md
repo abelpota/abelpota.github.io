@@ -83,12 +83,17 @@ Game state is managed through module-level variables:
 
 **Game Mechanics:**
 - Score: 1 point per food collected
-- **Separate high scores** saved for each difficulty level
-- Four difficulty levels with dynamic canvas sizing (40px tiles):
+- **Separate high scores** saved for each difficulty level (including custom mode)
+- Five difficulty levels with dynamic canvas sizing (40px tiles):
   - Easy: 10x10 tiles, 150ms speed
   - Medium: 15x15 tiles, 100ms speed
   - Hard: 20x20 tiles, 60ms speed
   - **EXTREME**: 25x25 tiles, 30ms speed (extremely fast and challenging)
+  - **Custom**: Fully customizable (10-30 tiles, 20-200ms speed)
+- **Custom Mode**: Adjustable sliders for map size and snake speed
+  - Map size: 10-30 tiles (10x10 to 30x30 grid)
+  - Speed: 20ms (fastest) to 200ms (slowest)
+  - Separate high score tracking for custom mode
 - Toggleable wall collision mode (game over vs. wrap-around)
 - Pause/resume functionality (Space key or button)
 - Keyboard controls: WASD and Arrow keys
@@ -186,7 +191,7 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v3.2**
+Current version: **v4.0**
 - Displayed in top-right corner of the UI
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -195,6 +200,7 @@ Current version: **v3.2**
 - Update this in both `index.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v4.0**: Added Custom game mode with adjustable map size (10-30 tiles) and speed (20-200ms)
 - **v3.2**: Snake waits for first player input before moving (keyboard and mobile D-pad support)
 - **v3.1**: Added 1-second delay before snake starts moving, difficulty-specific high score labels
 - **v3.0**: Increased tile size to 40px (larger tiles with 400-1000px canvases), per-difficulty high score tracking, added EXTREME difficulty mode

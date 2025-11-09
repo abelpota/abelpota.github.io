@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number">v3.2</span>
+        <span class="version-number">v4.0</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
 
         <!-- Start Screen -->
@@ -33,6 +33,32 @@
                     <span class="difficulty-name">EXTREME</span>
                     <span class="difficulty-desc">25x25 Tiles • Lightning Fast</span>
                 </button>
+                <button class="difficulty-btn custom-btn" data-difficulty="custom">
+                    <span class="difficulty-name">Custom</span>
+                    <span class="difficulty-desc">Customize Size & Speed</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Custom Settings Screen -->
+        <div id="customScreen" class="custom-screen hidden">
+            <h1 class="custom-title">Custom Game</h1>
+            <p class="custom-subtitle">Customize Your Experience</p>
+            <div class="custom-controls">
+                <div class="custom-control-group">
+                    <label for="customSize">Map Size: <span id="customSizeValue">15</span>x<span id="customSizeValue2">15</span></label>
+                    <input type="range" id="customSize" min="10" max="30" value="15" step="1">
+                    <span class="custom-hint">10-30 tiles</span>
+                </div>
+                <div class="custom-control-group">
+                    <label for="customSpeed">Speed: <span id="customSpeedValue">100</span>ms</label>
+                    <input type="range" id="customSpeed" min="20" max="200" value="100" step="10">
+                    <span class="custom-hint">20ms (fastest) - 200ms (slowest)</span>
+                </div>
+                <div class="custom-buttons">
+                    <button id="startCustomBtn" class="btn-primary">Start Game</button>
+                    <button id="backToMenuBtn" class="btn-secondary">Back</button>
+                </div>
             </div>
         </div>
 
