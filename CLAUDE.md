@@ -195,7 +195,7 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v4.3**
+Current version: **v4.4**
 - Displayed in top-right corner of the UI (in snake.html)
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -204,6 +204,7 @@ Current version: **v4.3**
 - Update this in both `snake.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v4.4**: Added favicon icons (🎮 for homepage, 🐍 for Snake game)
 - **v4.3**: Custom mode multi-color gradient, reduced Coming Soon tiles to one, renamed to OciGames
 - **v4.2**: Added home button and replaced emojis with Material Icons
 - **v4.1**: Created homepage portal (index.html) with game tile navigation, moved Snake game to snake.html
