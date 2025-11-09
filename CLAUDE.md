@@ -186,7 +186,7 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v3.1**
+Current version: **v3.2**
 - Displayed in top-right corner of the UI
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
@@ -195,6 +195,7 @@ Current version: **v3.1**
 - Update this in both `index.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v3.2**: Snake waits for first player input before moving (keyboard and mobile D-pad support)
 - **v3.1**: Added 1-second delay before snake starts moving, difficulty-specific high score labels
 - **v3.0**: Increased tile size to 40px (larger tiles with 400-1000px canvases), per-difficulty high score tracking, added EXTREME difficulty mode
 - **v2.1**: Added icons to control mode buttons (🖥️📱📲), improved touch response (touchstart)

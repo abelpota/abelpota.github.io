@@ -124,7 +124,7 @@ function initGame() {
         { x: Math.floor(TILE_COUNT / 2) - 2, y: Math.floor(TILE_COUNT / 2) }
     ];
 
-    // Start with no movement - will start after delay
+    // Start with no movement - will start on first input
     dx = 0;
     dy = 0;
 
@@ -149,14 +149,6 @@ function initGame() {
 
     // Initial draw to show the starting position
     draw();
-
-    // Start movement after 1 second delay
-    setTimeout(() => {
-        if (!isPaused && !isGameOver) {
-            dx = 1;
-            dy = 0;
-        }
-    }, 1000);
 }
 
 // Generate food at random position
@@ -475,6 +467,9 @@ document.addEventListener('keydown', (e) => {
     // Prevent input during pause or game over
     if (isPaused || isGameOver) return;
 
+    // Check if this is the first input (game hasn't started yet)
+    const isFirstInput = (dx === 0 && dy === 0);
+
     // Determine the reference direction for validation
     // If queue is empty: validate against current direction (dx, dy)
     // If queue has 1 move: validate against that queued move
@@ -498,25 +493,39 @@ document.addEventListener('keydown', (e) => {
     let newDx = null;
     let newDy = null;
 
-    if ((e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') && referenceDy === 0) {
-        newDx = 0;
-        newDy = -1;
-    } else if ((e.key === 'ArrowDown' || e.key.toLowerCase() === 's') && referenceDy === 0) {
-        newDx = 0;
-        newDy = 1;
-    } else if ((e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') && referenceDx === 0) {
-        newDx = -1;
-        newDy = 0;
-    } else if ((e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') && referenceDx === 0) {
-        newDx = 1;
-        newDy = 0;
+    if (e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') {
+        if (isFirstInput || referenceDy === 0) {
+            newDx = 0;
+            newDy = -1;
+        }
+    } else if (e.key === 'ArrowDown' || e.key.toLowerCase() === 's') {
+        if (isFirstInput || referenceDy === 0) {
+            newDx = 0;
+            newDy = 1;
+        }
+    } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
+        if (isFirstInput || referenceDx === 0) {
+            newDx = -1;
+            newDy = 0;
+        }
+    } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
+        if (isFirstInput || referenceDx === 0) {
+            newDx = 1;
+            newDy = 0;
+        }
     }
 
     // Only queue the move if it's valid
     if (newDx !== null && newDy !== null) {
-        // Allow up to 2 moves in the queue
-        if (moveQueue.length < 2) {
-            moveQueue.push({ dx: newDx, dy: newDy });
+        // If this is the first input, set direction immediately
+        if (isFirstInput) {
+            dx = newDx;
+            dy = newDy;
+        } else {
+            // Allow up to 2 moves in the queue
+            if (moveQueue.length < 2) {
+                moveQueue.push({ dx: newDx, dy: newDy });
+            }
         }
     }
 });
@@ -653,6 +662,9 @@ dpadButtons.forEach(btn => {
 });
 
 function handleMobileInput(direction) {
+    // Check if this is the first input (game hasn't started yet)
+    const isFirstInput = (dx === 0 && dy === 0);
+
     // Determine the reference direction for validation
     let referenceDx, referenceDy;
 
@@ -671,25 +683,25 @@ function handleMobileInput(direction) {
 
     switch(direction) {
         case 'up':
-            if (referenceDy === 0) {
+            if (isFirstInput || referenceDy === 0) {
                 newDx = 0;
                 newDy = -1;
             }
             break;
         case 'down':
-            if (referenceDy === 0) {
+            if (isFirstInput || referenceDy === 0) {
                 newDx = 0;
                 newDy = 1;
             }
             break;
         case 'left':
-            if (referenceDx === 0) {
+            if (isFirstInput || referenceDx === 0) {
                 newDx = -1;
                 newDy = 0;
             }
             break;
         case 'right':
-            if (referenceDx === 0) {
+            if (isFirstInput || referenceDx === 0) {
                 newDx = 1;
                 newDy = 0;
             }
@@ -697,8 +709,15 @@ function handleMobileInput(direction) {
     }
 
     if (newDx !== null && newDy !== null) {
-        if (moveQueue.length < 2) {
-            moveQueue.push({ dx: newDx, dy: newDy });
+        // If this is the first input, set direction immediately
+        if (isFirstInput) {
+            dx = newDx;
+            dy = newDy;
+        } else {
+            // Allow up to 2 moves in the queue
+            if (moveQueue.length < 2) {
+                moveQueue.push({ dx: newDx, dy: newDy });
+            }
         }
     }
 }
