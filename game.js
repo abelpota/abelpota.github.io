@@ -124,8 +124,8 @@ function initGame() {
         { x: Math.floor(TILE_COUNT / 2) - 2, y: Math.floor(TILE_COUNT / 2) }
     ];
 
-    // Start moving right
-    dx = 1;
+    // Start with no movement - will start after delay
+    dx = 0;
     dy = 0;
 
     // Clear move queue
@@ -146,6 +146,17 @@ function initGame() {
     // Start game loop
     if (gameLoop) clearInterval(gameLoop);
     gameLoop = setInterval(update, currentSpeed);
+
+    // Initial draw to show the starting position
+    draw();
+
+    // Start movement after 1 second delay
+    setTimeout(() => {
+        if (!isPaused && !isGameOver) {
+            dx = 1;
+            dy = 0;
+        }
+    }, 1000);
 }
 
 // Generate food at random position
@@ -166,6 +177,12 @@ function generateFood() {
 // Update game state
 function update() {
     if (isPaused || isGameOver) return;
+
+    // Don't move if snake hasn't started yet (initial delay)
+    if (dx === 0 && dy === 0) {
+        draw();
+        return;
+    }
 
     // Process queued move if available
     if (moveQueue.length > 0) {
