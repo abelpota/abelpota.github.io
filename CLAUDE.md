@@ -13,9 +13,13 @@ Simply open `index.html` in a web browser. No build step or server required.
 ## Architecture
 
 ### File Structure
-- `index.html` - Main HTML structure with game UI and canvas
+- `index.html` - Homepage portal with game tiles and navigation
+- `homepage.css` - Styling for the homepage portal
+- `snake.html` - Snake game HTML structure with game UI and canvas
 - `game.js` - All game logic, rendering, and input handling
-- `style.css` - Modern styling with gradients and flexbox layout
+- `style.css` - Modern styling for the Snake game with gradients and flexbox layout
+- `CLAUDE.md` - Development documentation
+- `README.md` - Project documentation
 
 ### Game Loop Architecture
 
@@ -191,15 +195,17 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v4.0**
-- Displayed in top-right corner of the UI
+Current version: **v4.2**
+- Displayed in top-right corner of the UI (in snake.html)
 - **Version Format**: `vMAJOR.MINOR`
   - **Major (first number)**: Incremented for new features or major updates
   - **Minor (second number)**: Incremented for bug fixes and small changes
   - Minor resets to 0 when major is incremented
-- Update this in both `index.html` and this documentation when releasing new versions
+- Update this in both `snake.html` and this documentation when releasing new versions
 
 **Version History:**
+- **v4.2**: Added home button (🏠) in Snake game to navigate back to homepage
+- **v4.1**: Created homepage portal (index.html) with game tile navigation, moved Snake game to snake.html
 - **v4.0**: Added Custom game mode with adjustable map size (10-30 tiles) and speed (20-200ms)
 - **v3.2**: Snake waits for first player input before moving (keyboard and mobile D-pad support)
 - **v3.1**: Added 1-second delay before snake starts moving, difficulty-specific high score labels

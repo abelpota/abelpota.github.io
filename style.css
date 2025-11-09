@@ -36,10 +36,43 @@ body {
     position: relative;
 }
 
-.fullscreen-btn {
+.home-btn {
     position: absolute;
     top: 20px;
     left: 20px;
+    background: transparent;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+    z-index: 10;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-btn .material-symbols-outlined {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 28px;
+}
+
+.home-btn:hover {
+    transform: scale(1.2);
+}
+
+body.light-mode .home-btn .material-symbols-outlined {
+    color: #667eea;
+    text-shadow: none;
+}
+
+.fullscreen-btn {
+    position: absolute;
+    top: 20px;
+    left: 60px;
     background: transparent;
     border: none;
     font-size: 1.8em;
@@ -84,10 +117,24 @@ body.light-mode .fullscreen-btn {
     line-height: 1;
     transition: transform 0.3s ease;
     z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-btn .material-symbols-outlined {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 28px;
 }
 
 .settings-btn:hover {
     transform: rotate(90deg);
+}
+
+body.light-mode .settings-btn .material-symbols-outlined {
+    color: #667eea;
+    text-shadow: none;
 }
 
 /* Start Screen */
