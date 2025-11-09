@@ -3,6 +3,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
+const highScoreLabel = document.getElementById('highScoreLabel');
 const wallModeCheckbox = document.getElementById('wallMode');
 const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
@@ -378,6 +379,10 @@ function updateScore() {
     }
 
     highScoreElement.textContent = highScore;
+
+    // Update high score label with difficulty name
+    const difficultyName = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+    highScoreLabel.textContent = `${difficultyName} High Score:`;
 }
 
 // Game over
