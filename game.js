@@ -782,6 +782,25 @@ eraseHighscoreBtn.addEventListener('click', () => {
     }
 });
 
+// Changelog modal
+const versionNumber = document.getElementById('versionNumber');
+const changelogModal = document.getElementById('changelogModal');
+const closeChangelog = document.getElementById('closeChangelog');
+
+versionNumber.addEventListener('click', () => {
+    changelogModal.classList.remove('hidden');
+});
+
+closeChangelog.addEventListener('click', () => {
+    changelogModal.classList.add('hidden');
+});
+
+changelogModal.addEventListener('click', (e) => {
+    if (e.target === changelogModal) {
+        changelogModal.classList.add('hidden');
+    }
+});
+
 // Initialize theme from localStorage
 const savedTheme = localStorage.getItem('snakeTheme') || 'dark';
 if (savedTheme === 'light') {
