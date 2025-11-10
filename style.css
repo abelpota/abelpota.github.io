@@ -936,6 +936,14 @@ body.tablet-mode #gameCanvas {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
 
+.mobile-tablet-only {
+    display: block;
+}
+
+.mobile-tablet-only.hidden {
+    display: none;
+}
+
 /* Light Mode Styles */
 body.light-mode {
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);

@@ -31,6 +31,8 @@ const lightModeBtn = document.getElementById('lightModeBtn');
 const pcModeBtn = document.getElementById('pcModeBtn');
 const mobileModeBtn = document.getElementById('mobileModeBtn');
 const tabletModeBtn = document.getElementById('tabletModeBtn');
+const mobileSlowdownCheckbox = document.getElementById('mobileSlowdownCheckbox');
+const mobileSlowdownSetting = document.getElementById('mobileSlowdownSetting');
 const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
 
 // Mobile controls
@@ -118,9 +120,12 @@ function startGameWithDifficulty(difficulty) {
     baseSpeed = settings.speed;
     currentSpeed = baseSpeed;
 
-    // Apply speed multiplier for mobile/tablet modes (40% slower)
-    if (document.body.classList.contains('mobile-mode') ||
-        document.body.classList.contains('tablet-mode')) {
+    // Apply speed multiplier for mobile/tablet modes (40% slower) if slowdown is enabled
+    const isMobileOrTablet = document.body.classList.contains('mobile-mode') ||
+                            document.body.classList.contains('tablet-mode');
+    const slowdownEnabled = mobileSlowdownCheckbox.checked;
+
+    if (isMobileOrTablet && slowdownEnabled) {
         currentSpeed = Math.floor(currentSpeed * 1.4);
     }
 
@@ -144,9 +149,12 @@ function startCustomGame(tiles, speed) {
     baseSpeed = speed;
     currentSpeed = baseSpeed;
 
-    // Apply speed multiplier for mobile/tablet modes (40% slower)
-    if (document.body.classList.contains('mobile-mode') ||
-        document.body.classList.contains('tablet-mode')) {
+    // Apply speed multiplier for mobile/tablet modes (40% slower) if slowdown is enabled
+    const isMobileOrTablet = document.body.classList.contains('mobile-mode') ||
+                            document.body.classList.contains('tablet-mode');
+    const slowdownEnabled = mobileSlowdownCheckbox.checked;
+
+    if (isMobileOrTablet && slowdownEnabled) {
         currentSpeed = Math.floor(currentSpeed * 1.4);
     }
 
@@ -686,9 +694,12 @@ lightModeBtn.addEventListener('click', () => {
 
 // Function to update game speed based on control mode
 function updateGameSpeed() {
-    // Recalculate speed based on current control mode
-    if (document.body.classList.contains('mobile-mode') ||
-        document.body.classList.contains('tablet-mode')) {
+    // Recalculate speed based on current control mode and slowdown setting
+    const isMobileOrTablet = document.body.classList.contains('mobile-mode') ||
+                            document.body.classList.contains('tablet-mode');
+    const slowdownEnabled = mobileSlowdownCheckbox.checked;
+
+    if (isMobileOrTablet && slowdownEnabled) {
         currentSpeed = Math.floor(baseSpeed * 1.4); // 40% slower
     } else {
         currentSpeed = baseSpeed;
@@ -707,6 +718,7 @@ pcModeBtn.addEventListener('click', () => {
     pcModeBtn.classList.add('active');
     mobileModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.add('hidden');
     localStorage.setItem('snakeControlMode', 'pc');
     updateGameSpeed();
 });
@@ -717,6 +729,7 @@ mobileModeBtn.addEventListener('click', () => {
     mobileModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'mobile');
     updateGameSpeed();
 });
@@ -727,6 +740,7 @@ tabletModeBtn.addEventListener('click', () => {
     tabletModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'tablet');
     updateGameSpeed();
 });
@@ -911,16 +925,33 @@ if (savedControlMode === 'mobile') {
     mobileModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.remove('hidden');
 } else if (savedControlMode === 'tablet') {
     document.body.classList.add('tablet-mode');
     tabletModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.remove('hidden');
 } else {
     pcModeBtn.classList.add('active');
     mobileModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
+    mobileSlowdownSetting.classList.add('hidden');
 }
+
+// Initialize mobile slowdown checkbox from localStorage (default: enabled/checked)
+const savedSlowdownSetting = localStorage.getItem('snakeMobileSlowdown');
+if (savedSlowdownSetting === 'false') {
+    mobileSlowdownCheckbox.checked = false;
+} else {
+    mobileSlowdownCheckbox.checked = true;
+}
+
+// Mobile slowdown checkbox listener
+mobileSlowdownCheckbox.addEventListener('change', () => {
+    localStorage.setItem('snakeMobileSlowdown', mobileSlowdownCheckbox.checked.toString());
+    updateGameSpeed();
+});
 
 // Difficulty selection from start screen
 document.querySelectorAll('.difficulty-btn').forEach(btn => {
