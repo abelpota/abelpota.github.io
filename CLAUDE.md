@@ -196,7 +196,7 @@ Game state is managed through module-level variables:
 
 ### Version
 
-**Snake Game Version:** **v4.5.2**
+**Snake Game Version:** **v4.6.0**
 - Displayed in top-right corner of the Snake game (in snake.html)
 - Tracks changes specific to the Snake game
 
@@ -214,6 +214,7 @@ Game state is managed through module-level variables:
 - Update version numbers in the respective HTML files and this documentation when releasing new versions
 
 **Snake Game Version History:**
+- **v4.6.0**: Added Mystery game mode with zone-based food location, game mode selector on start screen
 - **v4.5.2**: Fixed changelog modal overflow bug in Snake game
 - **v4.5.1**: Updated version format to include PATCH number
 - **v4.5.0**: Added clickable version history modal with improved dark/light mode styling

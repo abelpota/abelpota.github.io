@@ -55,6 +55,7 @@ const DIFFICULTY_SETTINGS = {
 
 let GRID_SIZE = 40;
 let currentDifficulty = 'medium';
+let currentGameMode = 'classic'; // 'classic' or 'mystery'
 
 let TILE_COUNT = canvas.width / GRID_SIZE;
 
@@ -392,36 +393,65 @@ function draw() {
     // Reset shadow
     ctx.shadowBlur = 0;
 
-    // Draw food with pulsing effect
+    // Draw food based on game mode
     const time = Date.now() / 200;
     const pulse = Math.sin(time) * 0.2 + 1;
 
-    const foodGradient = ctx.createRadialGradient(
-        food.x * GRID_SIZE + GRID_SIZE / 2,
-        food.y * GRID_SIZE + GRID_SIZE / 2,
-        0,
-        food.x * GRID_SIZE + GRID_SIZE / 2,
-        food.y * GRID_SIZE + GRID_SIZE / 2,
-        GRID_SIZE / 2
-    );
-    foodGradient.addColorStop(0, '#ff6b6b');
-    foodGradient.addColorStop(1, '#ee5a6f');
+    if (currentGameMode === 'mystery') {
+        // Mystery mode: Draw zone (3x3 area) instead of exact food location
+        const zoneSize = 3; // 3x3 tiles
+        const zoneStartX = Math.max(0, food.x - 1);
+        const zoneStartY = Math.max(0, food.y - 1);
+        const zoneEndX = Math.min(TILE_COUNT - 1, food.x + 1);
+        const zoneEndY = Math.min(TILE_COUNT - 1, food.y + 1);
 
-    ctx.fillStyle = foodGradient;
-    ctx.shadowBlur = 20 * pulse;
-    ctx.shadowColor = '#ff6b6b';
+        // Draw semi-transparent zone
+        ctx.fillStyle = 'rgba(255, 107, 107, 0.15)';
+        ctx.fillRect(
+            zoneStartX * GRID_SIZE + 2,
+            zoneStartY * GRID_SIZE + 2,
+            (zoneEndX - zoneStartX + 1) * GRID_SIZE - 4,
+            (zoneEndY - zoneStartY + 1) * GRID_SIZE - 4
+        );
 
-    ctx.beginPath();
-    ctx.arc(
-        food.x * GRID_SIZE + GRID_SIZE / 2,
-        food.y * GRID_SIZE + GRID_SIZE / 2,
-        (GRID_SIZE / 2 - 3) * pulse,
-        0,
-        Math.PI * 2
-    );
-    ctx.fill();
+        // Draw pulsing border around zone
+        ctx.strokeStyle = `rgba(255, 107, 107, ${0.3 + pulse * 0.2})`;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(
+            zoneStartX * GRID_SIZE + 2,
+            zoneStartY * GRID_SIZE + 2,
+            (zoneEndX - zoneStartX + 1) * GRID_SIZE - 4,
+            (zoneEndY - zoneStartY + 1) * GRID_SIZE - 4
+        );
+    } else {
+        // Classic mode: Draw food at exact location
+        const foodGradient = ctx.createRadialGradient(
+            food.x * GRID_SIZE + GRID_SIZE / 2,
+            food.y * GRID_SIZE + GRID_SIZE / 2,
+            0,
+            food.x * GRID_SIZE + GRID_SIZE / 2,
+            food.y * GRID_SIZE + GRID_SIZE / 2,
+            GRID_SIZE / 2
+        );
+        foodGradient.addColorStop(0, '#ff6b6b');
+        foodGradient.addColorStop(1, '#ee5a6f');
 
-    ctx.shadowBlur = 0;
+        ctx.fillStyle = foodGradient;
+        ctx.shadowBlur = 20 * pulse;
+        ctx.shadowColor = '#ff6b6b';
+
+        ctx.beginPath();
+        ctx.arc(
+            food.x * GRID_SIZE + GRID_SIZE / 2,
+            food.y * GRID_SIZE + GRID_SIZE / 2,
+            (GRID_SIZE / 2 - 3) * pulse,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+    }
 }
 
 // Update score display
@@ -923,6 +953,25 @@ document.addEventListener('fullscreenchange', () => {
     } else {
         fullscreenBtn.textContent = '⛶';
     }
+});
+
+// Game mode selector
+const classicModeBtn = document.getElementById('classicModeBtn');
+const mysteryModeBtn = document.getElementById('mysteryModeBtn');
+const gamemodeDescription = document.getElementById('gamemodeDescription');
+
+classicModeBtn.addEventListener('click', () => {
+    currentGameMode = 'classic';
+    classicModeBtn.classList.add('active');
+    mysteryModeBtn.classList.remove('active');
+    gamemodeDescription.textContent = 'Classic Snake - Eat the food and grow!';
+});
+
+mysteryModeBtn.addEventListener('click', () => {
+    currentGameMode = 'mystery';
+    mysteryModeBtn.classList.add('active');
+    classicModeBtn.classList.remove('active');
+    gamemodeDescription.textContent = 'Mystery Mode - Find food in the zone!';
 });
 
 // Show start screen on load
