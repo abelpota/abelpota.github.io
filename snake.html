@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined">home</span>
         </a>
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number" id="versionNumber" title="View Changelog">v5.3.3</span>
+        <span class="version-number" id="versionNumber" title="View Changelog">v5.3.4</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">
             <span class="material-symbols-outlined">settings</span>
         </button>
@@ -26,17 +26,25 @@
                 <h2>Version History</h2>
                 <div class="changelog-list">
                     <div class="changelog-item">
+                        <h3>v5.3.4</h3>
+                        <ul>
+                            <li>Fixed critical bug where pressing LEFT as first move caused instant death</li>
+                            <li>Snake now properly recognizes its implicit starting direction (RIGHT)</li>
+                            <li>Opposite direction blocking now works correctly for first input</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
                         <h3>v5.3.3</h3>
                         <ul>
-                            <li>Changed Hell Mode visual from circular border to left-to-right fill animation</li>
+                            <li>Improved Hell Mode visuals with left-to-right fill animation</li>
                             <li>Added automatic progress decay (resets after 2 seconds of inactivity)</li>
-                            <li>Progress resets when closing settings (unless Hell mode is active)</li>
+                            <li>Progress resets when closing settings modal</li>
                         </ul>
                     </div>
                     <div class="changelog-item">
                         <h3>v5.3.2</h3>
                         <ul>
-                            <li>Fixed bug where pressing opposite direction caused instant death</li>
+                            <li>Fixed bug where pressing opposite direction during gameplay caused instant death</li>
                         </ul>
                     </div>
                     <div class="changelog-item">

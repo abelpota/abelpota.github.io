@@ -31,9 +31,11 @@ body {
     width: 100%;
     max-height: calc(100vh - 20px);
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .home-btn {
@@ -988,7 +990,8 @@ body.light-mode .gamemode-description {
 
 @media (max-width: 700px) {
     .container {
-        padding: 20px;
+        padding: 15px;
+        max-height: 100vh;
     }
 
     .game-header h1 {
@@ -1009,6 +1012,51 @@ body.light-mode .gamemode-description {
         height: auto;
         max-height: calc(100vh - 400px);
         min-height: 250px;
+    }
+
+    /* Start screen mobile optimizations */
+    .start-screen {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .start-title {
+        font-size: 2.2em;
+    }
+
+    .start-subtitle {
+        font-size: 1.1em;
+    }
+
+    .gamemode-selector {
+        margin: 10px 0;
+        gap: 10px;
+    }
+
+    .gamemode-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .gamemode-description {
+        font-size: 1em;
+        margin: 5px 0 15px 0;
+    }
+
+    .difficulty-buttons {
+        gap: 15px;
+    }
+
+    .difficulty-btn {
+        padding: 15px 20px;
+    }
+
+    .difficulty-btn h2 {
+        font-size: 1.8em;
+    }
+
+    .difficulty-btn p {
+        font-size: 0.9em;
     }
 }
 

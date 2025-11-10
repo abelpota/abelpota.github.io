@@ -710,13 +710,19 @@ document.addEventListener('keydown', (e) => {
     // Check if this is the first input (game hasn't started yet)
     const isFirstInput = (dx === 0 && dy === 0);
 
-    // Determine the reference direction for validation
-    // If queue is empty: validate against current direction (dx, dy)
-    // If queue has 1 move: validate against that queued move
-    // If queue has 2 moves: ignore (queue is full)
+    // For validation, we need to check against the LAST direction in the chain
+    // If queue is empty: check against current direction (dx, dy)
+    // If queue has moves: check against the last queued move
+    // SPECIAL CASE: If first input, validate against snake's implicit starting direction (RIGHT)
+    // because snake body initially extends to the left
     let referenceDx, referenceDy;
 
-    if (moveQueue.length === 0) {
+    if (isFirstInput) {
+        // Snake starts facing RIGHT (body extends left from head)
+        // So we must block LEFT as the first move
+        referenceDx = 1;  // RIGHT
+        referenceDy = 0;
+    } else if (moveQueue.length === 0) {
         // Validate against current direction
         referenceDx = dx;
         referenceDy = dy;
@@ -724,6 +730,9 @@ document.addEventListener('keydown', (e) => {
         // Validate against the queued move
         referenceDx = moveQueue[0].dx;
         referenceDy = moveQueue[0].dy;
+    } else if (moveQueue.length === 2) {
+        // Queue already has 2 moves, ignore input
+        return;
     } else {
         // Queue is full, ignore input
         return;
@@ -757,28 +766,44 @@ document.addEventListener('keydown', (e) => {
     } else if (direction) {
         // Normal mapping
         if (direction === 'up') {
-            const isOpposite = (0 === -referenceDx && -1 === -referenceDy);
-            if (isFirstInput || !isOpposite) {
-                newDx = 0;
-                newDy = -1;
+            newDx = 0;
+            newDy = -1;
+            // Check if UP (0, -1) is opposite to reference direction
+            const isOpposite = (newDx === -referenceDx && newDy === -referenceDy);
+            if (isOpposite) {
+                // Don't allow this move
+                newDx = null;
+                newDy = null;
             }
         } else if (direction === 'down') {
-            const isOpposite = (0 === -referenceDx && 1 === -referenceDy);
-            if (isFirstInput || !isOpposite) {
-                newDx = 0;
-                newDy = 1;
+            newDx = 0;
+            newDy = 1;
+            // Check if DOWN (0, 1) is opposite to reference direction
+            const isOpposite = (newDx === -referenceDx && newDy === -referenceDy);
+            if (isOpposite) {
+                // Don't allow this move
+                newDx = null;
+                newDy = null;
             }
         } else if (direction === 'left') {
-            const isOpposite = (-1 === -referenceDx && 0 === -referenceDy);
-            if (isFirstInput || !isOpposite) {
-                newDx = -1;
-                newDy = 0;
+            newDx = -1;
+            newDy = 0;
+            // Check if LEFT (-1, 0) is opposite to reference direction
+            const isOpposite = (newDx === -referenceDx && newDy === -referenceDy);
+            if (isOpposite) {
+                // Don't allow this move
+                newDx = null;
+                newDy = null;
             }
         } else if (direction === 'right') {
-            const isOpposite = (1 === -referenceDx && 0 === -referenceDy);
-            if (isFirstInput || !isOpposite) {
-                newDx = 1;
-                newDy = 0;
+            newDx = 1;
+            newDy = 0;
+            // Check if RIGHT (1, 0) is opposite to reference direction
+            const isOpposite = (newDx === -referenceDx && newDy === -referenceDy);
+            if (isOpposite) {
+                // Don't allow this move
+                newDx = null;
+                newDy = null;
             }
         }
     }
@@ -786,6 +811,7 @@ document.addEventListener('keydown', (e) => {
     // Only queue the move if it's valid
     if (newDx !== null && newDy !== null) {
         // If this is the first input, set direction immediately
+        // BUT prevent multiple first inputs - once direction is set, must wait for game loop
         if (isFirstInput) {
             dx = newDx;
             dy = newDy;
@@ -1025,7 +1051,12 @@ function handleMobileInput(direction) {
     // Determine the reference direction for validation
     let referenceDx, referenceDy;
 
-    if (moveQueue.length === 0) {
+    if (isFirstInput) {
+        // Snake starts facing RIGHT (body extends left from head)
+        // So we must block LEFT as the first move
+        referenceDx = 1;  // RIGHT
+        referenceDy = 0;
+    } else if (moveQueue.length === 0) {
         referenceDx = dx;
         referenceDy = dy;
     } else if (moveQueue.length === 1) {
@@ -1051,31 +1082,47 @@ function handleMobileInput(direction) {
         // Normal mapping
         switch(direction) {
             case 'up':
-                // Check if opposite to reference direction
-                if (isFirstInput || !(0 === -referenceDx && -1 === -referenceDy)) {
-                    newDx = 0;
-                    newDy = -1;
+                newDx = 0;
+                newDy = -1;
+                // Check if UP (0, -1) is opposite to reference direction
+                const isOppositeUp = (newDx === -referenceDx && newDy === -referenceDy);
+                if (isOppositeUp) {
+                    // Don't allow this move
+                    newDx = null;
+                    newDy = null;
                 }
                 break;
             case 'down':
-                // Check if opposite to reference direction
-                if (isFirstInput || !(0 === -referenceDx && 1 === -referenceDy)) {
-                    newDx = 0;
-                    newDy = 1;
+                newDx = 0;
+                newDy = 1;
+                // Check if DOWN (0, 1) is opposite to reference direction
+                const isOppositeDown = (newDx === -referenceDx && newDy === -referenceDy);
+                if (isOppositeDown) {
+                    // Don't allow this move
+                    newDx = null;
+                    newDy = null;
                 }
                 break;
             case 'left':
-                // Check if opposite to reference direction
-                if (isFirstInput || !(-1 === -referenceDx && 0 === -referenceDy)) {
-                    newDx = -1;
-                    newDy = 0;
+                newDx = -1;
+                newDy = 0;
+                // Check if LEFT (-1, 0) is opposite to reference direction
+                const isOppositeLeft = (newDx === -referenceDx && newDy === -referenceDy);
+                if (isOppositeLeft) {
+                    // Don't allow this move
+                    newDx = null;
+                    newDy = null;
                 }
                 break;
             case 'right':
-                // Check if opposite to reference direction
-                if (isFirstInput || !(1 === -referenceDx && 0 === -referenceDy)) {
-                    newDx = 1;
-                    newDy = 0;
+                newDx = 1;
+                newDy = 0;
+                // Check if RIGHT (1, 0) is opposite to reference direction
+                const isOppositeRight = (newDx === -referenceDx && newDy === -referenceDy);
+                if (isOppositeRight) {
+                    // Don't allow this move
+                    newDx = null;
+                    newDy = null;
                 }
                 break;
         }
