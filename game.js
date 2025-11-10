@@ -73,6 +73,7 @@ let isGameOver = false;
 let currentSpeed = DIFFICULTY_SETTINGS.medium.speed;
 let baseSpeed = DIFFICULTY_SETTINGS.medium.speed; // Base speed without multipliers
 let moveQueue = []; // Queue for storing next move
+let canSaveHighScore = true; // Tracks if current round can save high score
 
 // Function to get high score for current difficulty
 function getHighScore(difficulty) {
@@ -189,6 +190,7 @@ function initGame() {
     // Reset game state
     isPaused = false;
     isGameOver = false;
+    canSaveHighScore = wallModeCheckbox.checked; // Only eligible if wall mode is enabled at start
     hideOverlay();
 
     // Start game loop
@@ -472,7 +474,8 @@ function draw() {
 function updateScore() {
     scoreElement.textContent = score;
 
-    if (score > highScore) {
+    // Only update high score if this round is eligible (wall mode was enabled at start)
+    if (canSaveHighScore && score > highScore) {
         highScore = score;
         saveHighScore(currentDifficulty, highScore);
     }
@@ -629,6 +632,15 @@ resumeBtn.addEventListener('click', () => {
     } else {
         togglePause();
     }
+});
+
+// Wall mode checkbox listener - disables high score eligibility if unchecked during game
+wallModeCheckbox.addEventListener('change', () => {
+    // If wall mode is disabled during a game, that round can no longer save high score
+    if (!wallModeCheckbox.checked && !isGameOver) {
+        canSaveHighScore = false;
+    }
+    // Re-enabling wall mode mid-game does NOT restore high score eligibility
 });
 
 // Settings modal event listeners
