@@ -171,6 +171,45 @@ body.light-mode .settings-btn .material-symbols-outlined {
     margin: 0;
 }
 
+.gamemode-selector {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.gamemode-btn {
+    padding: 12px 30px;
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 10px;
+    background: rgba(30, 20, 50, 0.6);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gamemode-btn:hover {
+    background: rgba(40, 30, 60, 0.8);
+    border-color: rgba(167, 139, 250, 0.5);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.gamemode-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #a78bfa;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.gamemode-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1em;
+    margin: 10px 0 20px 0;
+    min-height: 30px;
+}
+
 .difficulty-buttons {
     display: flex;
     flex-direction: column;
@@ -947,6 +986,7 @@ body.light-mode #gameCanvas {
     max-width: 600px;
     max-height: 80vh;
     background: rgba(20, 15, 35, 0.98);
+    overflow: hidden;
 }
 
 .changelog-content h2 {

@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined">home</span>
         </a>
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number" id="versionNumber" title="View Changelog">v4.5</span>
+        <span class="version-number" id="versionNumber" title="View Changelog">v5.0.1</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">
             <span class="material-symbols-outlined">settings</span>
         </button>
@@ -26,7 +26,33 @@
                 <h2>Version History</h2>
                 <div class="changelog-list">
                     <div class="changelog-item">
-                        <h3>v4.5</h3>
+                        <h3>v5.0.1</h3>
+                        <ul>
+                            <li>Fixed Mystery mode: food now spawns randomly within zone instead of always at center</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v5.0.0</h3>
+                        <ul>
+                            <li>Added Mystery game mode with zone-based food location</li>
+                            <li>Added game mode selector on start screen (Classic/Mystery)</li>
+                            <li>Mystery mode shows 3x3 zone instead of exact food position</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.5.2</h3>
+                        <ul>
+                            <li>Fixed changelog modal overflow bug</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.5.1</h3>
+                        <ul>
+                            <li>Updated version format to include PATCH number</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v4.5.0</h3>
                         <ul>
                             <li>Added clickable version history modal</li>
                             <li>Improved changelog styling for dark and light modes</li>
@@ -121,7 +147,11 @@
         <!-- Start Screen -->
         <div id="startScreen" class="start-screen">
             <h1 class="start-title">Snake Game</h1>
-            <p class="start-subtitle">Choose Your Difficulty</p>
+            <div class="gamemode-selector">
+                <button id="classicModeBtn" class="gamemode-btn active">Classic</button>
+                <button id="mysteryModeBtn" class="gamemode-btn">Mystery</button>
+            </div>
+            <p id="gamemodeDescription" class="gamemode-description">Classic Snake - Eat the food and grow!</p>
             <div class="difficulty-buttons">
                 <button class="difficulty-btn easy-btn" data-difficulty="easy">
                     <span class="difficulty-name">Easy</span>

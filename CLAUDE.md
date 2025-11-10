@@ -195,16 +195,30 @@ Game state is managed through module-level variables:
 - All changes maintain the GRID_SIZE ratio (40px per tile)
 
 ### Version
-Current version: **v4.5**
-- Displayed in top-right corner of the UI (in snake.html)
-- **Version Format**: `vMAJOR.MINOR`
-  - **Major (first number)**: Incremented for new features or major updates
-  - **Minor (second number)**: Incremented for bug fixes and small changes
-  - Minor resets to 0 when major is incremented
-- Update this in both `snake.html` and this documentation when releasing new versions
 
-**Version History:**
-- **v4.5**: Added clickable version history modal with improved dark/light mode styling
+**Snake Game Version:** **v5.0.1**
+- Displayed in top-right corner of the Snake game (in snake.html)
+- Tracks changes specific to the Snake game
+
+**Homepage Version:** **v1.2.1**
+- Displayed in top-right corner of the homepage (in index.html)
+- Tracks changes specific to the homepage portal
+
+**Version Format**: `vMAJOR.MINOR.PATCH`
+- **Major (first number)**: Incremented for new features or major updates
+- **Minor (second number)**: Incremented for smaller features and enhancements
+- **Patch (third number)**: Incremented for bug fixes and minor tweaks
+- Patch resets to 0 when minor is incremented
+- Minor resets to 0 when major is incremented
+- Each page (homepage and Snake game) maintains its own independent version number
+- Update version numbers in the respective HTML files and this documentation when releasing new versions
+
+**Snake Game Version History:**
+- **v5.0.1**: Fixed Mystery mode bug where food always spawned at center of zone (now spawns randomly within zone)
+- **v5.0.0**: Added Mystery game mode with zone-based food location, game mode selector on start screen
+- **v4.5.2**: Fixed changelog modal overflow bug in Snake game
+- **v4.5.1**: Updated version format to include PATCH number
+- **v4.5.0**: Added clickable version history modal with improved dark/light mode styling
 - **v4.4**: Added favicon icons (🎮 for homepage, 🐍 for Snake game)
 - **v4.3**: Custom mode multi-color gradient, reduced Coming Soon tiles to one, renamed to OciGames
 - **v4.2**: Added home button and replaced emojis with Material Icons
@@ -216,3 +230,9 @@ Current version: **v4.5**
 - **v2.1**: Added icons to control mode buttons (🖥️📱📲), improved touch response (touchstart)
 - **v2.0**: Added tablet mode, fullscreen toggle, device auto-detection, and balanced mobile/tablet speed (40% slower)
 - **v1.0**: Initial release with dark theme, mobile mode, settings modal, and dynamic difficulty
+
+**Homepage Version History:**
+- **v1.2.1**: Fixed changelog modal overflow (items now clip properly when scrolling)
+- **v1.2.0**: Added homepage version number with clickable changelog modal
+- **v1.1**: Added favicon (🎮), reduced placeholder tiles to one, rebranded to OciGames
+- **v1.0**: Initial homepage creation with game portal design, game tiles with hover effects
