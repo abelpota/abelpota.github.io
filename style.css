@@ -474,6 +474,13 @@ body.light-mode .settings-btn .material-symbols-outlined {
     font-size: 1.5em;
     font-weight: bold;
     color: #e9d5ff;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.stat-item.ineligible .stat-label,
+.stat-item.ineligible .stat-value {
+    color: #6b7280;
+    opacity: 0.5;
 }
 
 .controls-panel {

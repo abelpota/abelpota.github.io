@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
 const highScoreLabel = document.getElementById('highScoreLabel');
+const highScoreContainer = document.getElementById('highScoreContainer');
 const wallModeCheckbox = document.getElementById('wallMode');
 const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
@@ -73,6 +74,7 @@ let isGameOver = false;
 let currentSpeed = DIFFICULTY_SETTINGS.medium.speed;
 let baseSpeed = DIFFICULTY_SETTINGS.medium.speed; // Base speed without multipliers
 let moveQueue = []; // Queue for storing next move
+let canSaveHighScore = true; // Tracks if current round can save high score
 
 // Function to get high score for current difficulty
 function getHighScore(difficulty) {
@@ -189,6 +191,15 @@ function initGame() {
     // Reset game state
     isPaused = false;
     isGameOver = false;
+    canSaveHighScore = wallModeCheckbox.checked; // Only eligible if wall mode is enabled at start
+
+    // Update visual feedback for high score eligibility
+    if (canSaveHighScore) {
+        highScoreContainer.classList.remove('ineligible');
+    } else {
+        highScoreContainer.classList.add('ineligible');
+    }
+
     hideOverlay();
 
     // Start game loop
@@ -472,7 +483,8 @@ function draw() {
 function updateScore() {
     scoreElement.textContent = score;
 
-    if (score > highScore) {
+    // Only update high score if this round is eligible (wall mode was enabled at start)
+    if (canSaveHighScore && score > highScore) {
         highScore = score;
         saveHighScore(currentDifficulty, highScore);
     }
@@ -629,6 +641,16 @@ resumeBtn.addEventListener('click', () => {
     } else {
         togglePause();
     }
+});
+
+// Wall mode checkbox listener - disables high score eligibility if unchecked during game
+wallModeCheckbox.addEventListener('change', () => {
+    // If wall mode is disabled during a game, that round can no longer save high score
+    if (!wallModeCheckbox.checked && !isGameOver) {
+        canSaveHighScore = false;
+        highScoreContainer.classList.add('ineligible');
+    }
+    // Re-enabling wall mode mid-game does NOT restore high score eligibility
 });
 
 // Settings modal event listeners
