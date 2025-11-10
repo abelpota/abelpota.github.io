@@ -947,6 +947,7 @@ body.light-mode #gameCanvas {
     max-width: 600px;
     max-height: 80vh;
     background: rgba(20, 15, 35, 0.98);
+    overflow: hidden;
 }
 
 .changelog-content h2 {

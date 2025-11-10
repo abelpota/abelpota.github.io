@@ -196,7 +196,7 @@ Game state is managed through module-level variables:
 
 ### Version
 
-**Snake Game Version:** **v4.5.1**
+**Snake Game Version:** **v4.5.2**
 - Displayed in top-right corner of the Snake game (in snake.html)
 - Tracks changes specific to the Snake game
 
@@ -214,7 +214,8 @@ Game state is managed through module-level variables:
 - Update version numbers in the respective HTML files and this documentation when releasing new versions
 
 **Snake Game Version History:**
-- **v4.5.1**: Fixed changelog modal overflow (items now clip properly when scrolling)
+- **v4.5.2**: Fixed changelog modal overflow bug in Snake game
+- **v4.5.1**: Updated version format to include PATCH number
 - **v4.5.0**: Added clickable version history modal with improved dark/light mode styling
 - **v4.4**: Added favicon icons (🎮 for homepage, 🐍 for Snake game)
 - **v4.3**: Custom mode multi-color gradient, reduced Coming Soon tiles to one, renamed to OciGames
