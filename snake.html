@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined">home</span>
         </a>
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number" id="versionNumber" title="View Changelog">v5.3.4</span>
+        <span class="version-number" id="versionNumber" title="View Changelog">v5.5.1</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">
             <span class="material-symbols-outlined">settings</span>
         </button>
@@ -25,6 +25,22 @@
                 <span class="close-btn" id="closeChangelog">&times;</span>
                 <h2>Version History</h2>
                 <div class="changelog-list">
+                    <div class="changelog-item">
+                        <h3>v5.5.1</h3>
+                        <ul>
+                            <li>Fixed mobile viewport cutoff issues at top and bottom of screen</li>
+                            <li>Improved mobile scrolling behavior</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-item">
+                        <h3>v5.5.0</h3>
+                        <ul>
+                            <li>Added joystick control option for mobile and tablet modes</li>
+                            <li>Added swipe-to-turn functionality for touch devices</li>
+                            <li>Added "Touch Control Type" setting with three options: D-Pad, Joystick, and Swipe</li>
+                            <li>Control type preference persists via localStorage</li>
+                        </ul>
+                    </div>
                     <div class="changelog-item">
                         <h3>v5.3.4</h3>
                         <ul>
@@ -302,6 +318,7 @@
 
             <!-- Mobile Touch Controls -->
             <div id="mobileControls" class="mobile-controls hidden">
+                <!-- D-pad controls -->
                 <div class="dpad-container">
                     <button class="dpad-btn dpad-up" data-direction="up">▲</button>
                     <div class="dpad-middle">
@@ -310,6 +327,13 @@
                         <button class="dpad-btn dpad-right" data-direction="right">▶</button>
                     </div>
                     <button class="dpad-btn dpad-down" data-direction="down">▼</button>
+                </div>
+
+                <!-- Joystick controls -->
+                <div class="joystick-container hidden">
+                    <div class="joystick-base">
+                        <div class="joystick-stick"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -336,6 +360,14 @@
                         <button id="pcModeBtn" class="toggle-btn active">🖥️ PC</button>
                         <button id="mobileModeBtn" class="toggle-btn">📱 Mobile</button>
                         <button id="tabletModeBtn" class="toggle-btn">📲 Tablet</button>
+                    </div>
+                </div>
+                <div class="setting-item mobile-tablet-only hidden" id="mobileControlTypeSetting">
+                    <label for="mobileControlTypeToggle">Touch Control Type:</label>
+                    <div class="toggle-group">
+                        <button id="dpadControlBtn" class="toggle-btn active">D-Pad</button>
+                        <button id="joystickControlBtn" class="toggle-btn">Joystick</button>
+                        <button id="swipeControlBtn" class="toggle-btn">Swipe</button>
                     </div>
                 </div>
                 <div class="setting-item mobile-tablet-only hidden" id="mobileSlowdownSetting">

@@ -38,6 +38,16 @@ const eraseHighscoreBtn = document.getElementById('eraseHighscoreBtn');
 // Mobile controls
 const mobileControls = document.getElementById('mobileControls');
 const dpadButtons = document.querySelectorAll('.dpad-btn');
+const dpadContainer = document.querySelector('.dpad-container');
+const joystickContainer = document.querySelector('.joystick-container');
+const joystickStick = document.querySelector('.joystick-stick');
+const joystickBase = document.querySelector('.joystick-base');
+
+// Mobile control type buttons
+const dpadControlBtn = document.getElementById('dpadControlBtn');
+const joystickControlBtn = document.getElementById('joystickControlBtn');
+const swipeControlBtn = document.getElementById('swipeControlBtn');
+const mobileControlTypeSetting = document.getElementById('mobileControlTypeSetting');
 
 // Custom mode elements
 const customSizeSlider = document.getElementById('customSize');
@@ -85,6 +95,22 @@ let hellModeRoundsRemaining = 0;
 let hellModeActiveButton = null; // Tracks which button activated hell mode
 let controlMapping = null; // Stores randomized control mapping for hell mode
 let hellModeDecayTimer = null; // Timer for decaying progress over time
+
+// Mobile control type state
+let mobileControlType = 'dpad'; // 'dpad', 'joystick', or 'swipe'
+
+// Joystick state
+let joystickActive = false;
+let joystickStartX = 0;
+let joystickStartY = 0;
+let lastJoystickDirection = null; // Track last direction to prevent input flooding
+
+// Swipe detection state
+let swipeStartX = 0;
+let swipeStartY = 0;
+let swipeStartTime = 0;
+const SWIPE_THRESHOLD = 50; // Minimum distance in pixels to register as swipe
+const SWIPE_TIMEOUT = 300; // Maximum time in ms for swipe
 
 // Function to get high score for current difficulty
 function getHighScore(difficulty) {
@@ -942,6 +968,7 @@ pcModeBtn.addEventListener('click', () => {
     mobileModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.add('hidden');
+    mobileControlTypeSetting.classList.add('hidden');
     localStorage.setItem('snakeControlMode', 'pc');
     updateGameSpeed();
 
@@ -968,8 +995,10 @@ mobileModeBtn.addEventListener('click', () => {
     pcModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.remove('hidden');
+    mobileControlTypeSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'mobile');
     updateGameSpeed();
+    updateMobileControlVisibility();
 
     // Reset progress on other buttons
     resetHellModeProgress(pcModeBtn);
@@ -994,13 +1023,208 @@ tabletModeBtn.addEventListener('click', () => {
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.remove('hidden');
+    mobileControlTypeSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'tablet');
     updateGameSpeed();
+    updateMobileControlVisibility();
 
     // Reset progress on other buttons
     resetHellModeProgress(pcModeBtn);
     resetHellModeProgress(mobileModeBtn);
 });
+
+// Function to update visible mobile controls based on control type
+function updateMobileControlVisibility() {
+    if (mobileControlType === 'dpad') {
+        dpadContainer.classList.remove('hidden');
+        joystickContainer.classList.add('hidden');
+    } else if (mobileControlType === 'joystick') {
+        dpadContainer.classList.add('hidden');
+        joystickContainer.classList.remove('hidden');
+    } else if (mobileControlType === 'swipe') {
+        // Hide all visual controls for swipe-only mode
+        dpadContainer.classList.add('hidden');
+        joystickContainer.classList.add('hidden');
+    }
+}
+
+// Mobile control type toggle buttons
+dpadControlBtn.addEventListener('click', () => {
+    mobileControlType = 'dpad';
+    dpadControlBtn.classList.add('active');
+    joystickControlBtn.classList.remove('active');
+    swipeControlBtn.classList.remove('active');
+    localStorage.setItem('snakeMobileControlType', 'dpad');
+    updateMobileControlVisibility();
+});
+
+joystickControlBtn.addEventListener('click', () => {
+    mobileControlType = 'joystick';
+    joystickControlBtn.classList.add('active');
+    dpadControlBtn.classList.remove('active');
+    swipeControlBtn.classList.remove('active');
+    localStorage.setItem('snakeMobileControlType', 'joystick');
+    updateMobileControlVisibility();
+});
+
+swipeControlBtn.addEventListener('click', () => {
+    mobileControlType = 'swipe';
+    swipeControlBtn.classList.add('active');
+    dpadControlBtn.classList.remove('active');
+    joystickControlBtn.classList.remove('active');
+    localStorage.setItem('snakeMobileControlType', 'swipe');
+    updateMobileControlVisibility();
+});
+
+// Joystick controls
+joystickStick.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    joystickActive = true;
+
+    const touch = e.touches[0];
+    joystickStartX = touch.clientX;
+    joystickStartY = touch.clientY;
+});
+
+joystickStick.addEventListener('touchmove', (e) => {
+    if (!joystickActive || isPaused || isGameOver) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    const baseRect = joystickBase.getBoundingClientRect();
+    const baseCenterX = baseRect.left + baseRect.width / 2;
+    const baseCenterY = baseRect.top + baseRect.height / 2;
+
+    // Calculate distance from center
+    const deltaX = touch.clientX - baseCenterX;
+    const deltaY = touch.clientY - baseCenterY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    // Limit stick movement to base radius
+    const maxDistance = baseRect.width / 2 - 30; // 30px for stick radius
+    const limitedDistance = Math.min(distance, maxDistance);
+    const angle = Math.atan2(deltaY, deltaX);
+
+    const stickX = Math.cos(angle) * limitedDistance;
+    const stickY = Math.sin(angle) * limitedDistance;
+
+    // Move the stick visually
+    joystickStick.style.transform = `translate(${stickX}px, ${stickY}px)`;
+
+    // Determine direction based on angle
+    // Convert angle to degrees
+    const degrees = (angle * 180 / Math.PI + 360) % 360;
+
+    // Only process direction if distance is significant
+    if (distance > 30) {
+        // Right: -45 to 45 degrees
+        // Down: 45 to 135 degrees
+        // Left: 135 to 225 degrees
+        // Up: 225 to 315 degrees
+
+        let currentDirection = null;
+        if (degrees >= 315 || degrees < 45) {
+            currentDirection = 'right';
+        } else if (degrees >= 45 && degrees < 135) {
+            currentDirection = 'down';
+        } else if (degrees >= 135 && degrees < 225) {
+            currentDirection = 'left';
+        } else {
+            currentDirection = 'up';
+        }
+
+        // Only send input when direction actually changes to prevent flooding
+        if (currentDirection !== lastJoystickDirection) {
+            handleMobileInput(currentDirection);
+            lastJoystickDirection = currentDirection;
+        }
+    }
+});
+
+joystickStick.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    joystickActive = false;
+    lastJoystickDirection = null; // Reset direction tracking
+
+    // Reset stick position
+    joystickStick.style.transform = 'translate(0, 0)';
+});
+
+joystickStick.addEventListener('touchcancel', () => {
+    joystickActive = false;
+    lastJoystickDirection = null; // Reset direction tracking
+    joystickStick.style.transform = 'translate(0, 0)';
+});
+
+// Swipe detection on canvas and mobile controls
+function initSwipeDetection() {
+    // Use canvas as swipe target so it's always visible and covers the game area
+    const swipeTarget = canvas;
+
+    swipeTarget.addEventListener('touchstart', (e) => {
+        // Only process swipes if swipe mode is active or no other control type is visible
+        if (mobileControlType !== 'swipe' && (mobileControlType === 'dpad' || mobileControlType === 'joystick')) {
+            return;
+        }
+
+        const touch = e.touches[0];
+        swipeStartX = touch.clientX;
+        swipeStartY = touch.clientY;
+        swipeStartTime = Date.now();
+    });
+
+    swipeTarget.addEventListener('touchmove', (e) => {
+        // Prevent default only in swipe mode to avoid interfering with joystick
+        if (mobileControlType === 'swipe') {
+            e.preventDefault();
+        }
+    });
+
+    swipeTarget.addEventListener('touchend', (e) => {
+        // Only process swipes if swipe mode is active
+        if (mobileControlType !== 'swipe') {
+            return;
+        }
+
+        if (isPaused || isGameOver) return;
+
+        const touch = e.changedTouches[0];
+        const swipeEndX = touch.clientX;
+        const swipeEndY = touch.clientY;
+        const swipeTime = Date.now() - swipeStartTime;
+
+        // Check if swipe was fast enough
+        if (swipeTime > SWIPE_TIMEOUT) return;
+
+        const deltaX = swipeEndX - swipeStartX;
+        const deltaY = swipeEndY - swipeStartY;
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+
+        // Check if swipe distance is long enough
+        if (absDeltaX < SWIPE_THRESHOLD && absDeltaY < SWIPE_THRESHOLD) return;
+
+        // Determine direction based on which axis has more movement
+        if (absDeltaX > absDeltaY) {
+            // Horizontal swipe
+            if (deltaX > 0) {
+                handleMobileInput('right');
+            } else {
+                handleMobileInput('left');
+            }
+        } else {
+            // Vertical swipe
+            if (deltaY > 0) {
+                handleMobileInput('down');
+            } else {
+                handleMobileInput('up');
+            }
+        }
+    });
+}
+
+// Initialize swipe detection
+initSwipeDetection();
 
 // Mobile D-pad controls
 dpadButtons.forEach(btn => {
@@ -1220,17 +1444,20 @@ if (savedControlMode === 'mobile') {
     pcModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.remove('hidden');
+    mobileControlTypeSetting.classList.remove('hidden');
 } else if (savedControlMode === 'tablet') {
     document.body.classList.add('tablet-mode');
     tabletModeBtn.classList.add('active');
     pcModeBtn.classList.remove('active');
     mobileModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.remove('hidden');
+    mobileControlTypeSetting.classList.remove('hidden');
 } else {
     pcModeBtn.classList.add('active');
     mobileModeBtn.classList.remove('active');
     tabletModeBtn.classList.remove('active');
     mobileSlowdownSetting.classList.add('hidden');
+    mobileControlTypeSetting.classList.add('hidden');
 }
 
 // Initialize mobile slowdown checkbox from localStorage (default: enabled/checked)
@@ -1246,6 +1473,29 @@ mobileSlowdownCheckbox.addEventListener('change', () => {
     localStorage.setItem('snakeMobileSlowdown', mobileSlowdownCheckbox.checked.toString());
     updateGameSpeed();
 });
+
+// Initialize mobile control type from localStorage (default: dpad)
+const savedControlType = localStorage.getItem('snakeMobileControlType');
+if (savedControlType === 'joystick') {
+    mobileControlType = 'joystick';
+    joystickControlBtn.classList.add('active');
+    dpadControlBtn.classList.remove('active');
+    swipeControlBtn.classList.remove('active');
+} else if (savedControlType === 'swipe') {
+    mobileControlType = 'swipe';
+    swipeControlBtn.classList.add('active');
+    dpadControlBtn.classList.remove('active');
+    joystickControlBtn.classList.remove('active');
+} else {
+    // Default to dpad
+    mobileControlType = 'dpad';
+    dpadControlBtn.classList.add('active');
+    joystickControlBtn.classList.remove('active');
+    swipeControlBtn.classList.remove('active');
+}
+
+// Apply initial control visibility
+updateMobileControlVisibility();
 
 // Difficulty selection from start screen
 document.querySelectorAll('.difficulty-btn').forEach(btn => {

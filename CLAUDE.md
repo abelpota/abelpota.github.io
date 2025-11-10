@@ -196,7 +196,7 @@ Game state is managed through module-level variables:
 
 ### Version
 
-**Snake Game Version:** **v5.3.4**
+**Snake Game Version:** **v5.5.1**
 - Displayed in top-right corner of the Snake game (in snake.html)
 - Tracks changes specific to the Snake game
 
@@ -214,6 +214,8 @@ Game state is managed through module-level variables:
 - Update version numbers in the respective HTML files and this documentation when releasing new versions
 
 **Snake Game Version History:**
+- **v5.5.1**: Fixed mobile viewport cutoff issues where content at top and bottom of screen was cut off. Removed `position: fixed` from body and changed `overflow: hidden` to `overflow: auto` on html/body to allow proper scrolling on mobile devices. Changed mobile-mode container from `max-height: 100vh` with `overflow-y: auto` to `max-height: none` with `overflow-y: visible` for better mobile compatibility.
+- **v5.5.0**: Added joystick control and swipe-to-turn options for mobile/tablet modes. New "Touch Control Type" setting in settings modal allows users to switch between three control modes: D-Pad (default), Joystick (analog stick control), and Swipe (gesture-only with no visual controls). Joystick features direction change detection to prevent input flooding. Swipe detection targets canvas element for better gesture recognition across the game area. Control type preference persists via localStorage (`snakeMobileControlType`). The setting is only visible when in mobile or tablet mode.
 - **v5.3.4**: Fixed critical bug where pressing LEFT as first move caused instant death. The validation logic was incorrectly allowing opposite moves on first input. Added implicit starting direction (RIGHT) validation, and removed the `!isFirstInput` check from all direction validations so opposite moves are blocked regardless of timing. This ensures the snake's body layout (extending left) is respected when validating the first player input.
 - **v5.3.3**: Improved Hell Mode visuals - changed from circular conic-gradient border to left-to-right linear-gradient fill animation. Added automatic progress decay (resets after 2 seconds of inactivity). Progress resets when closing settings modal via X button or clicking outside (unless Hell mode is already active).
 - **v5.3.2**: Fixed critical bug where pressing the opposite direction to the snake's current movement caused instant death. This affected both normal mode and Hell mode. The validation logic now properly checks if the new direction is opposite to the reference direction (current or queued) and prevents such moves.

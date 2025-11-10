@@ -87,9 +87,11 @@ Works in all modern browsers that support:
 
 ## Version
 
-### Snake Game Version: **v5.3.4**
+### Snake Game Version: **v5.5.1**
 
 #### Recent Updates
+- **v5.5.1**: Fixed mobile viewport cutoff issues at top and bottom of screen. Improved mobile scrolling behavior by removing fixed positioning.
+- **v5.5.0**: Added joystick control and swipe-to-turn options for mobile/tablet modes. New "Touch Control Type" setting allows switching between D-Pad, Joystick, and Swipe-only controls. Control preference persists via localStorage.
 - **v5.3.4**: Fixed critical bug where pressing LEFT as first move caused instant death. Snake now properly recognizes its implicit starting direction (RIGHT), and opposite direction blocking works correctly for first input.
 - **v5.3.3**: Improved Hell Mode visuals - changed from circular border to left-to-right fill animation. Added automatic progress decay (resets after 2 seconds of inactivity). Progress resets when closing settings modal (unless Hell mode is active).
 - **v5.3.2**: Fixed critical bug where pressing the opposite direction to snake movement caused instant death (in both normal and Hell mode)
