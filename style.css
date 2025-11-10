@@ -31,9 +31,11 @@ body {
     width: 100%;
     max-height: calc(100vh - 20px);
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .home-btn {
@@ -924,6 +926,18 @@ body.tablet-mode #gameCanvas {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-color: transparent;
+    position: relative;
+}
+
+.toggle-btn.active.hell-progress {
+    background: linear-gradient(
+        to right,
+        #ff0000 0%,
+        #ff0000 var(--progress-percent, 0%),
+        #667eea var(--progress-percent, 0%),
+        #764ba2 100%
+    );
+    transition: background 0.1s linear;
 }
 
 .btn-danger {
@@ -934,6 +948,14 @@ body.tablet-mode #gameCanvas {
 
 .btn-danger:hover {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.mobile-tablet-only {
+    display: block;
+}
+
+.mobile-tablet-only.hidden {
+    display: none;
 }
 
 /* Light Mode Styles */
@@ -950,6 +972,10 @@ body.light-mode #gameCanvas {
     border-color: #667eea;
 }
 
+body.light-mode .gamemode-description {
+    color: rgba(0, 0, 0, 0.8);
+}
+
 @media (max-width: 950px) {
     .game-content {
         flex-direction: column;
@@ -964,7 +990,8 @@ body.light-mode #gameCanvas {
 
 @media (max-width: 700px) {
     .container {
-        padding: 20px;
+        padding: 15px;
+        max-height: 100vh;
     }
 
     .game-header h1 {
@@ -985,6 +1012,51 @@ body.light-mode #gameCanvas {
         height: auto;
         max-height: calc(100vh - 400px);
         min-height: 250px;
+    }
+
+    /* Start screen mobile optimizations */
+    .start-screen {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .start-title {
+        font-size: 2.2em;
+    }
+
+    .start-subtitle {
+        font-size: 1.1em;
+    }
+
+    .gamemode-selector {
+        margin: 10px 0;
+        gap: 10px;
+    }
+
+    .gamemode-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .gamemode-description {
+        font-size: 1em;
+        margin: 5px 0 15px 0;
+    }
+
+    .difficulty-buttons {
+        gap: 15px;
+    }
+
+    .difficulty-btn {
+        padding: 15px 20px;
+    }
+
+    .difficulty-btn h2 {
+        font-size: 1.8em;
+    }
+
+    .difficulty-btn p {
+        font-size: 0.9em;
     }
 }
 

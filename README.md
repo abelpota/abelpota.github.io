@@ -87,9 +87,15 @@ Works in all modern browsers that support:
 
 ## Version
 
-### Snake Game Version: **v5.1.1**
+### Snake Game Version: **v5.3.4**
 
 #### Recent Updates
+- **v5.3.4**: Fixed critical bug where pressing LEFT as first move caused instant death. Snake now properly recognizes its implicit starting direction (RIGHT), and opposite direction blocking works correctly for first input.
+- **v5.3.3**: Improved Hell Mode visuals - changed from circular border to left-to-right fill animation. Added automatic progress decay (resets after 2 seconds of inactivity). Progress resets when closing settings modal (unless Hell mode is active).
+- **v5.3.2**: Fixed critical bug where pressing the opposite direction to snake movement caused instant death (in both normal and Hell mode)
+- **v5.3.1**: Improved Hell Mode mechanics - red border now persists through all 3 rounds and decays by 1/3 per game over. Button is disabled during active Hell mode. Switching control modes immediately deactivates Hell mode.
+- **v5.3.0**: Added hidden "Hell Mode" easter egg - repeatedly click an active control mode button in settings to activate randomized controls for 3 rounds. Features animated red border progress indicator and automatic decay system.
+- **v5.2.0**: Added optional mobile slowdown toggle in settings (mobile/tablet modes only). Slowdown is enabled by default but can be disabled to play at full speed. Setting persists across sessions via localStorage.
 - **v5.1.1**: High score display now turns gray when player is no longer eligible to save high scores
 - **v5.1.0**: Wall collision toggle now affects high score eligibility (disabling prevents high score tracking for that round)
 - **v5.0.1**: Fixed Mystery mode bug where food always spawned at center of zone (now spawns randomly within zone)
