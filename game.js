@@ -62,6 +62,7 @@ let TILE_COUNT = canvas.width / GRID_SIZE;
 // Game state
 let snake = [];
 let food = {};
+let foodZone = {}; // Mystery mode: stores the top-left corner of the 3x3 zone
 let dx = 0;
 let dy = 0;
 let score = 0;
@@ -203,10 +204,27 @@ function generateFood() {
     let validPosition = false;
 
     while (!validPosition) {
-        food = {
-            x: Math.floor(Math.random() * TILE_COUNT),
-            y: Math.floor(Math.random() * TILE_COUNT)
-        };
+        if (currentGameMode === 'mystery') {
+            // Mystery mode: First pick a random 3x3 zone, then place food randomly within it
+            // Zone top-left corner can be from 0 to (TILE_COUNT - 3)
+            const maxZoneStart = Math.max(0, TILE_COUNT - 3);
+            foodZone = {
+                x: Math.floor(Math.random() * (maxZoneStart + 1)),
+                y: Math.floor(Math.random() * (maxZoneStart + 1))
+            };
+
+            // Place food randomly within the zone (0-2 offset from zone corner)
+            food = {
+                x: foodZone.x + Math.floor(Math.random() * 3),
+                y: foodZone.y + Math.floor(Math.random() * 3)
+            };
+        } else {
+            // Classic mode: Place food anywhere on the grid
+            food = {
+                x: Math.floor(Math.random() * TILE_COUNT),
+                y: Math.floor(Math.random() * TILE_COUNT)
+            };
+        }
 
         // Check if food is not on snake
         validPosition = !snake.some(segment => segment.x === food.x && segment.y === food.y);
@@ -400,28 +418,24 @@ function draw() {
     if (currentGameMode === 'mystery') {
         // Mystery mode: Draw zone (3x3 area) instead of exact food location
         const zoneSize = 3; // 3x3 tiles
-        const zoneStartX = Math.max(0, food.x - 1);
-        const zoneStartY = Math.max(0, food.y - 1);
-        const zoneEndX = Math.min(TILE_COUNT - 1, food.x + 1);
-        const zoneEndY = Math.min(TILE_COUNT - 1, food.y + 1);
 
         // Draw semi-transparent zone
         ctx.fillStyle = 'rgba(255, 107, 107, 0.15)';
         ctx.fillRect(
-            zoneStartX * GRID_SIZE + 2,
-            zoneStartY * GRID_SIZE + 2,
-            (zoneEndX - zoneStartX + 1) * GRID_SIZE - 4,
-            (zoneEndY - zoneStartY + 1) * GRID_SIZE - 4
+            foodZone.x * GRID_SIZE + 2,
+            foodZone.y * GRID_SIZE + 2,
+            zoneSize * GRID_SIZE - 4,
+            zoneSize * GRID_SIZE - 4
         );
 
         // Draw pulsing border around zone
         ctx.strokeStyle = `rgba(255, 107, 107, ${0.3 + pulse * 0.2})`;
         ctx.lineWidth = 3;
         ctx.strokeRect(
-            zoneStartX * GRID_SIZE + 2,
-            zoneStartY * GRID_SIZE + 2,
-            (zoneEndX - zoneStartX + 1) * GRID_SIZE - 4,
-            (zoneEndY - zoneStartY + 1) * GRID_SIZE - 4
+            foodZone.x * GRID_SIZE + 2,
+            foodZone.y * GRID_SIZE + 2,
+            zoneSize * GRID_SIZE - 4,
+            zoneSize * GRID_SIZE - 4
         );
     } else {
         // Classic mode: Draw food at exact location
