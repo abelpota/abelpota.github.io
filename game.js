@@ -732,24 +732,38 @@ document.addEventListener('keydown', (e) => {
     // Apply Hell mode mapping if active
     if (direction && hellModeActive && controlMapping) {
         const mapped = controlMapping[direction];
-        if (isFirstInput || (mapped.dx !== 0 ? referenceDy === 0 : referenceDx === 0)) {
+        // Check if mapped direction is opposite to current/reference direction
+        const isOpposite = (mapped.dx === -referenceDx && mapped.dy === -referenceDy);
+        if (isFirstInput || !isOpposite) {
             newDx = mapped.dx;
             newDy = mapped.dy;
         }
     } else if (direction) {
         // Normal mapping
-        if (direction === 'up' && (isFirstInput || referenceDy === 0)) {
-            newDx = 0;
-            newDy = -1;
-        } else if (direction === 'down' && (isFirstInput || referenceDy === 0)) {
-            newDx = 0;
-            newDy = 1;
-        } else if (direction === 'left' && (isFirstInput || referenceDx === 0)) {
-            newDx = -1;
-            newDy = 0;
-        } else if (direction === 'right' && (isFirstInput || referenceDx === 0)) {
-            newDx = 1;
-            newDy = 0;
+        if (direction === 'up') {
+            const isOpposite = (0 === -referenceDx && -1 === -referenceDy);
+            if (isFirstInput || !isOpposite) {
+                newDx = 0;
+                newDy = -1;
+            }
+        } else if (direction === 'down') {
+            const isOpposite = (0 === -referenceDx && 1 === -referenceDy);
+            if (isFirstInput || !isOpposite) {
+                newDx = 0;
+                newDy = 1;
+            }
+        } else if (direction === 'left') {
+            const isOpposite = (-1 === -referenceDx && 0 === -referenceDy);
+            if (isFirstInput || !isOpposite) {
+                newDx = -1;
+                newDy = 0;
+            }
+        } else if (direction === 'right') {
+            const isOpposite = (1 === -referenceDx && 0 === -referenceDy);
+            if (isFirstInput || !isOpposite) {
+                newDx = 1;
+                newDy = 0;
+            }
         }
     }
 
@@ -983,7 +997,9 @@ function handleMobileInput(direction) {
     // Apply Hell mode mapping if active
     if (hellModeActive && controlMapping && direction) {
         const mapped = controlMapping[direction];
-        if (isFirstInput || (mapped.dx !== 0 ? referenceDy === 0 : referenceDx === 0)) {
+        // Check if mapped direction is opposite to current/reference direction
+        const isOpposite = (mapped.dx === -referenceDx && mapped.dy === -referenceDy);
+        if (isFirstInput || !isOpposite) {
             newDx = mapped.dx;
             newDy = mapped.dy;
         }
@@ -991,25 +1007,29 @@ function handleMobileInput(direction) {
         // Normal mapping
         switch(direction) {
             case 'up':
-                if (isFirstInput || referenceDy === 0) {
+                // Check if opposite to reference direction
+                if (isFirstInput || !(0 === -referenceDx && -1 === -referenceDy)) {
                     newDx = 0;
                     newDy = -1;
                 }
                 break;
             case 'down':
-                if (isFirstInput || referenceDy === 0) {
+                // Check if opposite to reference direction
+                if (isFirstInput || !(0 === -referenceDx && 1 === -referenceDy)) {
                     newDx = 0;
                     newDy = 1;
                 }
                 break;
             case 'left':
-                if (isFirstInput || referenceDx === 0) {
+                // Check if opposite to reference direction
+                if (isFirstInput || !(-1 === -referenceDx && 0 === -referenceDy)) {
                     newDx = -1;
                     newDy = 0;
                 }
                 break;
             case 'right':
-                if (isFirstInput || referenceDx === 0) {
+                // Check if opposite to reference direction
+                if (isFirstInput || !(1 === -referenceDx && 0 === -referenceDy)) {
                     newDx = 1;
                     newDy = 0;
                 }
