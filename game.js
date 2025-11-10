@@ -78,6 +78,13 @@ let baseSpeed = DIFFICULTY_SETTINGS.medium.speed; // Base speed without multipli
 let moveQueue = []; // Queue for storing next move
 let canSaveHighScore = true; // Tracks if current round can save high score
 
+// Hell mode easter egg state
+let hellModeProgress = 0; // 0-100 percentage
+let hellModeActive = false;
+let hellModeRoundsRemaining = 0;
+let hellModeDecayTimer = null;
+let controlMapping = null; // Stores randomized control mapping for hell mode
+
 // Function to get high score for current difficulty
 function getHighScore(difficulty) {
     return parseInt(localStorage.getItem(`snakeHighScore_${difficulty}`)) || 0;
@@ -86,6 +93,93 @@ function getHighScore(difficulty) {
 // Function to save high score for current difficulty
 function saveHighScore(difficulty, score) {
     localStorage.setItem(`snakeHighScore_${difficulty}`, score);
+}
+
+// Hell mode functions
+function updateHellModeProgress(button) {
+    hellModeProgress = Math.min(100, hellModeProgress + 10);
+    const angle = (hellModeProgress / 100) * 360;
+
+    button.classList.add('hell-progress');
+    button.style.setProperty('--progress-angle', `${angle}deg`);
+
+    if (hellModeProgress >= 100) {
+        activateHellMode();
+        resetHellModeProgress(button);
+    }
+
+    // Reset decay timer
+    if (hellModeDecayTimer) {
+        clearTimeout(hellModeDecayTimer);
+    }
+
+    // Start decay timer (2 seconds of inactivity)
+    hellModeDecayTimer = setTimeout(() => {
+        decayHellModeProgress(button);
+    }, 2000);
+}
+
+function decayHellModeProgress(button) {
+    if (hellModeProgress > 0 && !settingsModal.classList.contains('hidden')) {
+        hellModeProgress = Math.max(0, hellModeProgress - 5);
+        const angle = (hellModeProgress / 100) * 360;
+        button.style.setProperty('--progress-angle', `${angle}deg`);
+
+        if (hellModeProgress === 0) {
+            button.classList.remove('hell-progress');
+            if (hellModeDecayTimer) {
+                clearTimeout(hellModeDecayTimer);
+                hellModeDecayTimer = null;
+            }
+        } else {
+            // Continue decaying
+            hellModeDecayTimer = setTimeout(() => {
+                decayHellModeProgress(button);
+            }, 200);
+        }
+    }
+}
+
+function resetHellModeProgress(button) {
+    hellModeProgress = 0;
+    button.classList.remove('hell-progress');
+    button.style.setProperty('--progress-angle', '0deg');
+    if (hellModeDecayTimer) {
+        clearTimeout(hellModeDecayTimer);
+        hellModeDecayTimer = null;
+    }
+}
+
+function activateHellMode() {
+    hellModeActive = true;
+    hellModeRoundsRemaining = 3;
+
+    // Create randomized control mapping
+    const directions = [
+        { dx: 0, dy: -1 }, // up
+        { dx: 0, dy: 1 },  // down
+        { dx: -1, dy: 0 }, // left
+        { dx: 1, dy: 0 }   // right
+    ];
+
+    // Shuffle the directions array
+    const shuffled = [...directions].sort(() => Math.random() - 0.5);
+
+    controlMapping = {
+        up: shuffled[0],
+        down: shuffled[1],
+        left: shuffled[2],
+        right: shuffled[3]
+    };
+
+    console.log('Hell Mode Activated! Controls randomized for 3 rounds.');
+}
+
+function deactivateHellMode() {
+    hellModeActive = false;
+    hellModeRoundsRemaining = 0;
+    controlMapping = null;
+    console.log('Hell Mode deactivated.');
 }
 
 // Screen management
@@ -509,6 +603,14 @@ function gameOver() {
     isGameOver = true;
     clearInterval(gameLoop);
 
+    // Decrement Hell mode rounds if active
+    if (hellModeActive && hellModeRoundsRemaining > 0) {
+        hellModeRoundsRemaining--;
+        if (hellModeRoundsRemaining === 0) {
+            deactivateHellMode();
+        }
+    }
+
     overlayTitle.textContent = 'Game Over!';
     overlayMessage.textContent = `Your score: ${score}`;
     resumeBtn.textContent = 'Play Again';
@@ -602,24 +704,38 @@ document.addEventListener('keydown', (e) => {
     // Arrow keys and WASD - validate against reference direction
     let newDx = null;
     let newDy = null;
+    let direction = null;
 
+    // Determine intended direction from key press
     if (e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') {
-        if (isFirstInput || referenceDy === 0) {
+        direction = 'up';
+    } else if (e.key === 'ArrowDown' || e.key.toLowerCase() === 's') {
+        direction = 'down';
+    } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
+        direction = 'left';
+    } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
+        direction = 'right';
+    }
+
+    // Apply Hell mode mapping if active
+    if (direction && hellModeActive && controlMapping) {
+        const mapped = controlMapping[direction];
+        if (isFirstInput || (mapped.dx !== 0 ? referenceDy === 0 : referenceDx === 0)) {
+            newDx = mapped.dx;
+            newDy = mapped.dy;
+        }
+    } else if (direction) {
+        // Normal mapping
+        if (direction === 'up' && (isFirstInput || referenceDy === 0)) {
             newDx = 0;
             newDy = -1;
-        }
-    } else if (e.key === 'ArrowDown' || e.key.toLowerCase() === 's') {
-        if (isFirstInput || referenceDy === 0) {
+        } else if (direction === 'down' && (isFirstInput || referenceDy === 0)) {
             newDx = 0;
             newDy = 1;
-        }
-    } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
-        if (isFirstInput || referenceDx === 0) {
+        } else if (direction === 'left' && (isFirstInput || referenceDx === 0)) {
             newDx = -1;
             newDy = 0;
-        }
-    } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
-        if (isFirstInput || referenceDx === 0) {
+        } else if (direction === 'right' && (isFirstInput || referenceDx === 0)) {
             newDx = 1;
             newDy = 0;
         }
@@ -668,12 +784,20 @@ settingsBtn.addEventListener('click', () => {
 
 closeSettings.addEventListener('click', () => {
     settingsModal.classList.add('hidden');
+    // Reset hell mode progress when settings close
+    resetHellModeProgress(pcModeBtn);
+    resetHellModeProgress(mobileModeBtn);
+    resetHellModeProgress(tabletModeBtn);
 });
 
 // Close modal when clicking outside
 settingsModal.addEventListener('click', (e) => {
     if (e.target === settingsModal) {
         settingsModal.classList.add('hidden');
+        // Reset hell mode progress when settings close
+        resetHellModeProgress(pcModeBtn);
+        resetHellModeProgress(mobileModeBtn);
+        resetHellModeProgress(tabletModeBtn);
     }
 });
 
@@ -714,6 +838,12 @@ function updateGameSpeed() {
 
 // Control mode toggle
 pcModeBtn.addEventListener('click', () => {
+    // Check if already active (easter egg trigger)
+    if (pcModeBtn.classList.contains('active')) {
+        updateHellModeProgress(pcModeBtn);
+        return;
+    }
+
     document.body.classList.remove('mobile-mode', 'tablet-mode');
     pcModeBtn.classList.add('active');
     mobileModeBtn.classList.remove('active');
@@ -721,9 +851,19 @@ pcModeBtn.addEventListener('click', () => {
     mobileSlowdownSetting.classList.add('hidden');
     localStorage.setItem('snakeControlMode', 'pc');
     updateGameSpeed();
+
+    // Reset progress on other buttons
+    resetHellModeProgress(mobileModeBtn);
+    resetHellModeProgress(tabletModeBtn);
 });
 
 mobileModeBtn.addEventListener('click', () => {
+    // Check if already active (easter egg trigger)
+    if (mobileModeBtn.classList.contains('active')) {
+        updateHellModeProgress(mobileModeBtn);
+        return;
+    }
+
     document.body.classList.remove('tablet-mode');
     document.body.classList.add('mobile-mode');
     mobileModeBtn.classList.add('active');
@@ -732,9 +872,19 @@ mobileModeBtn.addEventListener('click', () => {
     mobileSlowdownSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'mobile');
     updateGameSpeed();
+
+    // Reset progress on other buttons
+    resetHellModeProgress(pcModeBtn);
+    resetHellModeProgress(tabletModeBtn);
 });
 
 tabletModeBtn.addEventListener('click', () => {
+    // Check if already active (easter egg trigger)
+    if (tabletModeBtn.classList.contains('active')) {
+        updateHellModeProgress(tabletModeBtn);
+        return;
+    }
+
     document.body.classList.remove('mobile-mode');
     document.body.classList.add('tablet-mode');
     tabletModeBtn.classList.add('active');
@@ -743,6 +893,10 @@ tabletModeBtn.addEventListener('click', () => {
     mobileSlowdownSetting.classList.remove('hidden');
     localStorage.setItem('snakeControlMode', 'tablet');
     updateGameSpeed();
+
+    // Reset progress on other buttons
+    resetHellModeProgress(pcModeBtn);
+    resetHellModeProgress(mobileModeBtn);
 });
 
 // Mobile D-pad controls
@@ -807,31 +961,41 @@ function handleMobileInput(direction) {
     let newDx = null;
     let newDy = null;
 
-    switch(direction) {
-        case 'up':
-            if (isFirstInput || referenceDy === 0) {
-                newDx = 0;
-                newDy = -1;
-            }
-            break;
-        case 'down':
-            if (isFirstInput || referenceDy === 0) {
-                newDx = 0;
-                newDy = 1;
-            }
-            break;
-        case 'left':
-            if (isFirstInput || referenceDx === 0) {
-                newDx = -1;
-                newDy = 0;
-            }
-            break;
-        case 'right':
-            if (isFirstInput || referenceDx === 0) {
-                newDx = 1;
-                newDy = 0;
-            }
-            break;
+    // Apply Hell mode mapping if active
+    if (hellModeActive && controlMapping && direction) {
+        const mapped = controlMapping[direction];
+        if (isFirstInput || (mapped.dx !== 0 ? referenceDy === 0 : referenceDx === 0)) {
+            newDx = mapped.dx;
+            newDy = mapped.dy;
+        }
+    } else {
+        // Normal mapping
+        switch(direction) {
+            case 'up':
+                if (isFirstInput || referenceDy === 0) {
+                    newDx = 0;
+                    newDy = -1;
+                }
+                break;
+            case 'down':
+                if (isFirstInput || referenceDy === 0) {
+                    newDx = 0;
+                    newDy = 1;
+                }
+                break;
+            case 'left':
+                if (isFirstInput || referenceDx === 0) {
+                    newDx = -1;
+                    newDy = 0;
+                }
+                break;
+            case 'right':
+                if (isFirstInput || referenceDx === 0) {
+                    newDx = 1;
+                    newDy = 0;
+                }
+                break;
+        }
     }
 
     if (newDx !== null && newDy !== null) {

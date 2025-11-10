@@ -924,6 +924,31 @@ body.tablet-mode #gameCanvas {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    pointer-events: none;
+    transition: all 0.1s linear;
+}
+
+.toggle-btn.active.hell-progress::before {
+    border-image: conic-gradient(
+        from 0deg,
+        #ff0000 0deg,
+        #ff0000 var(--progress-angle, 0deg),
+        transparent var(--progress-angle, 0deg)
+    ) 1;
+    border-image-slice: 1;
 }
 
 .btn-danger {

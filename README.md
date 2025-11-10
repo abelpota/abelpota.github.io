@@ -87,9 +87,11 @@ Works in all modern browsers that support:
 
 ## Version
 
-### Snake Game Version: **v5.1.1**
+### Snake Game Version: **v5.3.0**
 
 #### Recent Updates
+- **v5.3.0**: Added hidden "Hell Mode" easter egg - repeatedly click an active control mode button in settings to activate randomized controls for 3 rounds. Features animated red border progress indicator and automatic decay system.
+- **v5.2.0**: Added optional mobile slowdown toggle in settings (mobile/tablet modes only). Slowdown is enabled by default but can be disabled to play at full speed. Setting persists across sessions via localStorage.
 - **v5.1.1**: High score display now turns gray when player is no longer eligible to save high scores
 - **v5.1.0**: Wall collision toggle now affects high score eligibility (disabling prevents high score tracking for that round)
 - **v5.0.1**: Fixed Mystery mode bug where food always spawned at center of zone (now spawns randomly within zone)
