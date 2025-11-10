@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="homepage-container">
+        <span class="homepage-version" id="homepageVersion" title="View Changelog">v1.2.1</span>
+
         <header class="homepage-header">
             <h1 class="homepage-title">OciGames</h1>
             <p class="homepage-subtitle">Choose Your Game</p>
@@ -19,7 +21,7 @@
                 <div class="game-icon">🐍</div>
                 <h2 class="game-name">Snake Game</h2>
                 <p class="game-description">Classic arcade snake with multiple difficulty levels and custom mode</p>
-                <span class="game-version">v4.5</span>
+                <span class="game-version">v4.5.1</span>
             </a>
 
             <!-- Placeholder for future games -->
@@ -34,5 +36,65 @@
             <p>OciGames • 2025</p>
         </footer>
     </div>
+
+    <!-- Homepage Changelog Modal -->
+    <div id="homepageChangelogModal" class="modal hidden">
+        <div class="modal-content changelog-content">
+            <span class="close-btn" id="closeHomepageChangelog">&times;</span>
+            <h2>Homepage Version History</h2>
+            <div class="changelog-list">
+                <div class="changelog-item">
+                    <h3>v1.2.1</h3>
+                    <ul>
+                        <li>Fixed changelog modal overflow bug</li>
+                    </ul>
+                </div>
+                <div class="changelog-item">
+                    <h3>v1.2.0</h3>
+                    <ul>
+                        <li>Added homepage version number with changelog modal</li>
+                    </ul>
+                </div>
+                <div class="changelog-item">
+                    <h3>v1.1</h3>
+                    <ul>
+                        <li>Added favicon (🎮 game controller icon)</li>
+                        <li>Reduced placeholder tiles to one</li>
+                        <li>Rebranded to OciGames</li>
+                    </ul>
+                </div>
+                <div class="changelog-item">
+                    <h3>v1.0</h3>
+                    <ul>
+                        <li>Initial homepage creation with game portal design</li>
+                        <li>Added game tiles with hover effects</li>
+                        <li>Created Snake game tile with version display</li>
+                        <li>Added Coming Soon placeholder tiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Homepage changelog modal
+        const homepageVersion = document.getElementById('homepageVersion');
+        const homepageChangelogModal = document.getElementById('homepageChangelogModal');
+        const closeHomepageChangelog = document.getElementById('closeHomepageChangelog');
+
+        homepageVersion.addEventListener('click', () => {
+            homepageChangelogModal.classList.remove('hidden');
+        });
+
+        closeHomepageChangelog.addEventListener('click', () => {
+            homepageChangelogModal.classList.add('hidden');
+        });
+
+        homepageChangelogModal.addEventListener('click', (e) => {
+            if (e.target === homepageChangelogModal) {
+                homepageChangelogModal.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
