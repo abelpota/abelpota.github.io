@@ -87,9 +87,10 @@ Works in all modern browsers that support:
 
 ## Version
 
-### Snake Game Version: **v5.3.0**
+### Snake Game Version: **v5.3.1**
 
 #### Recent Updates
+- **v5.3.1**: Improved Hell Mode mechanics - red border now persists through all 3 rounds and decays by 1/3 per game over. Button is disabled during active Hell mode. Switching control modes immediately deactivates Hell mode.
 - **v5.3.0**: Added hidden "Hell Mode" easter egg - repeatedly click an active control mode button in settings to activate randomized controls for 3 rounds. Features animated red border progress indicator and automatic decay system.
 - **v5.2.0**: Added optional mobile slowdown toggle in settings (mobile/tablet modes only). Slowdown is enabled by default but can be disabled to play at full speed. Setting persists across sessions via localStorage.
 - **v5.1.1**: High score display now turns gray when player is no longer eligible to save high scores

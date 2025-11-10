@@ -82,7 +82,7 @@ let canSaveHighScore = true; // Tracks if current round can save high score
 let hellModeProgress = 0; // 0-100 percentage
 let hellModeActive = false;
 let hellModeRoundsRemaining = 0;
-let hellModeDecayTimer = null;
+let hellModeActiveButton = null; // Tracks which button activated hell mode
 let controlMapping = null; // Stores randomized control mapping for hell mode
 
 // Function to get high score for current difficulty
@@ -97,6 +97,11 @@ function saveHighScore(difficulty, score) {
 
 // Hell mode functions
 function updateHellModeProgress(button) {
+    // Don't allow clicking if Hell mode is already active
+    if (hellModeActive) {
+        return;
+    }
+
     hellModeProgress = Math.min(100, hellModeProgress + 10);
     const angle = (hellModeProgress / 100) * 360;
 
@@ -104,55 +109,39 @@ function updateHellModeProgress(button) {
     button.style.setProperty('--progress-angle', `${angle}deg`);
 
     if (hellModeProgress >= 100) {
-        activateHellMode();
-        resetHellModeProgress(button);
+        activateHellMode(button);
     }
-
-    // Reset decay timer
-    if (hellModeDecayTimer) {
-        clearTimeout(hellModeDecayTimer);
-    }
-
-    // Start decay timer (2 seconds of inactivity)
-    hellModeDecayTimer = setTimeout(() => {
-        decayHellModeProgress(button);
-    }, 2000);
 }
 
-function decayHellModeProgress(button) {
-    if (hellModeProgress > 0 && !settingsModal.classList.contains('hidden')) {
-        hellModeProgress = Math.max(0, hellModeProgress - 5);
-        const angle = (hellModeProgress / 100) * 360;
-        button.style.setProperty('--progress-angle', `${angle}deg`);
+function updateHellModeBorderVisual(button) {
+    if (!button) return;
 
-        if (hellModeProgress === 0) {
-            button.classList.remove('hell-progress');
-            if (hellModeDecayTimer) {
-                clearTimeout(hellModeDecayTimer);
-                hellModeDecayTimer = null;
-            }
-        } else {
-            // Continue decaying
-            hellModeDecayTimer = setTimeout(() => {
-                decayHellModeProgress(button);
-            }, 200);
-        }
+    // Calculate angle based on rounds remaining (100% = 360deg, decreases by 1/3 each round)
+    const progressPercent = (hellModeRoundsRemaining / 3) * 100;
+    const angle = (progressPercent / 100) * 360;
+
+    if (hellModeRoundsRemaining > 0) {
+        button.classList.add('hell-progress');
+        button.style.setProperty('--progress-angle', `${angle}deg`);
+    } else {
+        button.classList.remove('hell-progress');
+        button.style.setProperty('--progress-angle', '0deg');
     }
 }
 
 function resetHellModeProgress(button) {
     hellModeProgress = 0;
-    button.classList.remove('hell-progress');
-    button.style.setProperty('--progress-angle', '0deg');
-    if (hellModeDecayTimer) {
-        clearTimeout(hellModeDecayTimer);
-        hellModeDecayTimer = null;
+    if (button) {
+        button.classList.remove('hell-progress');
+        button.style.setProperty('--progress-angle', '0deg');
     }
 }
 
-function activateHellMode() {
+function activateHellMode(button) {
     hellModeActive = true;
     hellModeRoundsRemaining = 3;
+    hellModeActiveButton = button;
+    hellModeProgress = 100; // Keep at 100 for visual
 
     // Create randomized control mapping
     const directions = [
@@ -172,14 +161,42 @@ function activateHellMode() {
         right: shuffled[3]
     };
 
+    // Update visual to show full border
+    updateHellModeBorderVisual(button);
+
     console.log('Hell Mode Activated! Controls randomized for 3 rounds.');
 }
 
 function deactivateHellMode() {
+    const button = hellModeActiveButton;
+
     hellModeActive = false;
     hellModeRoundsRemaining = 0;
+    hellModeProgress = 0;
     controlMapping = null;
+
+    // Clear visual
+    if (button) {
+        resetHellModeProgress(button);
+    }
+    hellModeActiveButton = null;
+
     console.log('Hell Mode deactivated.');
+}
+
+function decrementHellModeRound() {
+    if (hellModeActive && hellModeRoundsRemaining > 0) {
+        hellModeRoundsRemaining--;
+
+        // Update border visual to show 1/3 decay
+        updateHellModeBorderVisual(hellModeActiveButton);
+
+        if (hellModeRoundsRemaining === 0) {
+            deactivateHellMode();
+        } else {
+            console.log(`Hell Mode: ${hellModeRoundsRemaining} rounds remaining`);
+        }
+    }
 }
 
 // Screen management
@@ -603,13 +620,8 @@ function gameOver() {
     isGameOver = true;
     clearInterval(gameLoop);
 
-    // Decrement Hell mode rounds if active
-    if (hellModeActive && hellModeRoundsRemaining > 0) {
-        hellModeRoundsRemaining--;
-        if (hellModeRoundsRemaining === 0) {
-            deactivateHellMode();
-        }
-    }
+    // Decrement Hell mode round counter and update visual
+    decrementHellModeRound();
 
     overlayTitle.textContent = 'Game Over!';
     overlayMessage.textContent = `Your score: ${score}`;
@@ -784,20 +796,12 @@ settingsBtn.addEventListener('click', () => {
 
 closeSettings.addEventListener('click', () => {
     settingsModal.classList.add('hidden');
-    // Reset hell mode progress when settings close
-    resetHellModeProgress(pcModeBtn);
-    resetHellModeProgress(mobileModeBtn);
-    resetHellModeProgress(tabletModeBtn);
 });
 
 // Close modal when clicking outside
 settingsModal.addEventListener('click', (e) => {
     if (e.target === settingsModal) {
         settingsModal.classList.add('hidden');
-        // Reset hell mode progress when settings close
-        resetHellModeProgress(pcModeBtn);
-        resetHellModeProgress(mobileModeBtn);
-        resetHellModeProgress(tabletModeBtn);
     }
 });
 
@@ -844,6 +848,11 @@ pcModeBtn.addEventListener('click', () => {
         return;
     }
 
+    // Immediately deactivate Hell mode if switching modes
+    if (hellModeActive) {
+        deactivateHellMode();
+    }
+
     document.body.classList.remove('mobile-mode', 'tablet-mode');
     pcModeBtn.classList.add('active');
     mobileModeBtn.classList.remove('active');
@@ -862,6 +871,11 @@ mobileModeBtn.addEventListener('click', () => {
     if (mobileModeBtn.classList.contains('active')) {
         updateHellModeProgress(mobileModeBtn);
         return;
+    }
+
+    // Immediately deactivate Hell mode if switching modes
+    if (hellModeActive) {
+        deactivateHellMode();
     }
 
     document.body.classList.remove('tablet-mode');
@@ -883,6 +897,11 @@ tabletModeBtn.addEventListener('click', () => {
     if (tabletModeBtn.classList.contains('active')) {
         updateHellModeProgress(tabletModeBtn);
         return;
+    }
+
+    // Immediately deactivate Hell mode if switching modes
+    if (hellModeActive) {
+        deactivateHellMode();
     }
 
     document.body.classList.remove('mobile-mode');
