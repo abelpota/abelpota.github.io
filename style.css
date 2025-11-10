@@ -925,30 +925,17 @@ body.tablet-mode #gameCanvas {
     color: white;
     border-color: transparent;
     position: relative;
-    overflow: hidden;
 }
 
-.toggle-btn.active::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    right: -6px;
-    bottom: -6px;
-    border: 8px solid transparent;
-    border-radius: 13px;
-    pointer-events: none;
-    transition: all 0.1s linear;
-}
-
-.toggle-btn.active.hell-progress::before {
-    border-image: conic-gradient(
-        from -90deg,
-        #ff0000 0deg,
-        #ff0000 var(--progress-angle, 0deg),
-        transparent var(--progress-angle, 0deg)
-    ) 1;
-    border-image-slice: 1;
+.toggle-btn.active.hell-progress {
+    background: linear-gradient(
+        to right,
+        #ff0000 0%,
+        #ff0000 var(--progress-percent, 0%),
+        #667eea var(--progress-percent, 0%),
+        #764ba2 100%
+    );
+    transition: background 0.1s linear;
 }
 
 .btn-danger {

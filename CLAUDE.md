@@ -196,7 +196,7 @@ Game state is managed through module-level variables:
 
 ### Version
 
-**Snake Game Version:** **v5.3.2**
+**Snake Game Version:** **v5.3.3**
 - Displayed in top-right corner of the Snake game (in snake.html)
 - Tracks changes specific to the Snake game
 
@@ -214,6 +214,7 @@ Game state is managed through module-level variables:
 - Update version numbers in the respective HTML files and this documentation when releasing new versions
 
 **Snake Game Version History:**
+- **v5.3.3**: Improved Hell Mode visuals - changed from circular conic-gradient border to left-to-right linear-gradient fill animation. Added automatic progress decay (resets after 2 seconds of inactivity). Progress resets when closing settings modal via X button or clicking outside (unless Hell mode is already active).
 - **v5.3.2**: Fixed critical bug where pressing the opposite direction to the snake's current movement caused instant death. This affected both normal mode and Hell mode. The validation logic now properly checks if the new direction is opposite to the reference direction (current or queued) and prevents such moves.
 - **v5.3.1**: Improved Hell Mode mechanics - red border now persists through all 3 rounds, decaying by 1/3 (120 degrees) per game over instead of time-based decay. Border is larger (4px, -3px offset) and starts from top. Button cannot be clicked while Hell mode is active. Switching control modes immediately deactivates Hell mode and requires reactivation.
 - **v5.3.0**: Added hidden "Hell Mode" easter egg - repeatedly click an active control mode button in settings to activate randomized controls for 3 rounds. Features animated red border progress indicator (fills at 10% per click), automatic decay system (resets after 2 seconds idle or when settings close), and works with both keyboard and mobile controls.
