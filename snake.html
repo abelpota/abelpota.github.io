@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined">home</span>
         </a>
         <button id="fullscreenBtn" class="fullscreen-btn" title="Fullscreen">⛶</button>
-        <span class="version-number" id="versionNumber" title="View Changelog">v5.1.0</span>
+        <span class="version-number" id="versionNumber" title="View Changelog">v5.1.1</span>
         <button id="settingsBtn" class="settings-btn" title="Settings">
             <span class="material-symbols-outlined">settings</span>
         </button>
@@ -25,6 +25,12 @@
                 <span class="close-btn" id="closeChangelog">&times;</span>
                 <h2>Version History</h2>
                 <div class="changelog-list">
+                    <div class="changelog-item">
+                        <h3>v5.1.1</h3>
+                        <ul>
+                            <li>High score display now turns gray when player is no longer eligible to save high scores</li>
+                        </ul>
+                    </div>
                     <div class="changelog-item">
                         <h3>v5.1.0</h3>
                         <ul>
@@ -212,7 +218,7 @@
                     <span class="stat-label">Score:</span>
                     <span id="score" class="stat-value">0</span>
                 </div>
-                <div class="stat-item">
+                <div id="highScoreContainer" class="stat-item">
                     <span id="highScoreLabel" class="stat-label">High Score:</span>
                     <span id="highScore" class="stat-value">0</span>
                 </div>

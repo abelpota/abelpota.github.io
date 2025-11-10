@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
 const highScoreLabel = document.getElementById('highScoreLabel');
+const highScoreContainer = document.getElementById('highScoreContainer');
 const wallModeCheckbox = document.getElementById('wallMode');
 const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
@@ -191,6 +192,14 @@ function initGame() {
     isPaused = false;
     isGameOver = false;
     canSaveHighScore = wallModeCheckbox.checked; // Only eligible if wall mode is enabled at start
+
+    // Update visual feedback for high score eligibility
+    if (canSaveHighScore) {
+        highScoreContainer.classList.remove('ineligible');
+    } else {
+        highScoreContainer.classList.add('ineligible');
+    }
+
     hideOverlay();
 
     // Start game loop
@@ -639,6 +648,7 @@ wallModeCheckbox.addEventListener('change', () => {
     // If wall mode is disabled during a game, that round can no longer save high score
     if (!wallModeCheckbox.checked && !isGameOver) {
         canSaveHighScore = false;
+        highScoreContainer.classList.add('ineligible');
     }
     // Re-enabling wall mode mid-game does NOT restore high score eligibility
 });
